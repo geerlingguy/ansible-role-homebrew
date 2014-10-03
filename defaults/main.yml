@@ -1,0 +1,8 @@
+---
+homebrew_install_path: /usr/local
+homebrew_installed_packages:
+  - caskroom/cask/brew-cask
+  - ssh-copy-id
+  - pv
+homebrew_taps:
+  - caskroom/cask

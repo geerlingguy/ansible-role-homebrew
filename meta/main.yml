@@ -1,0 +1,18 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: geerlingguy
+  description: Homebrew for Mac OS X
+  company: "Midwestern Mac, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.4
+  platforms:
+  - name: GenericUNIX
+    versions:
+    - all
+    - any
+  categories:
+    - development
+    - system
+    - packaging
