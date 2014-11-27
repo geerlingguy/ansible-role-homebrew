@@ -19,21 +19,21 @@
   when: homebrew_binary.stat.exists == false
 
 - name: Get list of installed homebrew packages.
-  command: brew list
+  command: "{{ homebrew_install_path }}/bin/brew list"
   register: homebrew_list
   changed_when: false
 
 - name: Install configured homebrew packages.
-  command: "brew install {{ item }}"
+  command: "{{ homebrew_install_path }}/bin/brew install {{ item }}"
   with_items: homebrew_installed_packages
   when: "'{{ item }}' not in homebrew_list.stdout"
 
 - name: Get list of tapped homebrew taps.
-  command: brew tap
+  command: "{{ homebrew_install_path }}/bin/brew tap"
   register: homebrew_tap_list
   changed_when: false
 
 - name: Tap configured homebrew taps.
-  command: "brew tap {{ item }}"
+  command: "{{ homebrew_install_path }}/bin/brew tap {{ item }}"
   with_items: homebrew_taps
   when: "'{{ item }}' not in homebrew_tap_list.stdout"
