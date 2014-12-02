@@ -1,10 +1,10 @@
 ---
 - name: Ensure homebrew is installed.
   git:
-    repo: git@github.com:Homebrew/homebrew.git
+    repo: git://github.com/Homebrew/homebrew.git
     version: master
     dest: "{{ homebrew_install_path }}"
-    update: no
+    update: yes
   sudo: no
 
 - name: Check if homebrew binary is already in place.
