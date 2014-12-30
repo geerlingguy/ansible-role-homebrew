@@ -21,6 +21,7 @@
 - name: Get list of installed homebrew packages.
   command: brew list
   register: homebrew_list
+  always_run: yes
   changed_when: false
 
 - name: Install configured homebrew packages.
@@ -31,6 +32,7 @@
 - name: Get list of tapped homebrew taps.
   command: brew tap
   register: homebrew_tap_list
+  always_run: yes
   changed_when: false
 
 - name: Tap configured homebrew taps.
