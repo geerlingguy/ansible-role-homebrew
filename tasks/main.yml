@@ -29,13 +29,7 @@
   with_items: homebrew_installed_packages
   when: "'{{ item }}' not in homebrew_list.stdout"
 
-- name: Get list of tapped homebrew taps.
-  command: brew tap
-  register: homebrew_tap_list
-  always_run: yes
-  changed_when: false
+- include: tap.yml
 
-- name: Tap configured homebrew taps.
-  command: "brew tap {{ item }}"
-  with_items: homebrew_taps
-  when: "'{{ item }}' not in homebrew_tap_list.stdout"
+- include: cask.yml
+  when: "'caskroom/cask' in homebrew_taps"

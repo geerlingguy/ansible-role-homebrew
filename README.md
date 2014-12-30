@@ -1,6 +1,6 @@
 # Ansible Role: Homebrew
 
-Installs Homebrew on Mac OS X.
+Installs Homebrew on Mac OS X, and configures packages, taps, and cask apps according to supplied variables.
 
 ## Requirements
 
@@ -24,6 +24,15 @@ Packages you would like to make sure are installed via `brew install [package]`.
       - caskroom/cask
 
 Taps you would like to make sure Homebrew has tapped.
+
+    homebrew_cask_apps:
+      - firefox
+
+Apps you would like to have installed via `cask`. Search for popular apps on http://caskroom.io/ to see if they're available for install via Cask. Cask will not be used if it is not included in the list of taps in the `homebrew_taps` variable.
+
+    homebrew_cask_appdir: /Applications
+
+Directory where applications installed via `cask` should be installed.
 
 ## Dependencies
 
