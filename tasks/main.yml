@@ -27,6 +27,8 @@
 - name: Install configured homebrew packages.
   command: "brew install {{ item }}"
   with_items: homebrew_installed_packages
+  register: brew_install
+  changed_when: "'already installed' not in brew_install.stderr"
   when: "'{{ item }}' not in homebrew_list.stdout"
 
 - include: tap.yml

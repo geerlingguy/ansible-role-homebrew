@@ -8,4 +8,6 @@
 - name: Tap configured homebrew taps.
   command: "brew tap {{ item }}"
   with_items: homebrew_taps
+  register: brew_tap
+  changed_when: "'Already tapped!' not in brew_tap.stderr"
   when: "'{{ item }}' not in homebrew_tap_list.stdout"
