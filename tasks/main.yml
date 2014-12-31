@@ -5,6 +5,7 @@
     version: master
     dest: "{{ homebrew_install_path }}"
     update: no
+    accept_hostkey: yes
   sudo: no
 
 - name: Check if homebrew binary is already in place.
