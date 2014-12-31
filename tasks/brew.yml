@@ -1,13 +1,8 @@
 ---
-- name: Get list of installed homebrew packages.
-  command: brew list
-  register: homebrew_list
-  always_run: yes
-  changed_when: false
-
 - name: Install configured homebrew packages.
-  command: "brew install {{ item }}"
+  homebrew: "name={{ item }} state=present"
   with_items: homebrew_installed_packages
-  register: brew_install
-  changed_when: "'already installed' not in brew_install.stderr"
-  when: "'{{ item }}' not in homebrew_list.stdout"
+
+- name: Upgrade all homebrew packages (if configured).
+  homebrew: update_homebrew=yes upgrade_all=yes
+  when: homebrew_upgrade_all_packages

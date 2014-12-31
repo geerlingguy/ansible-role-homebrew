@@ -18,7 +18,11 @@ The path where Homebrew will be installed. It is recommended you stick to the de
       - ssh-copy-id
       - pv
 
-Packages you would like to make sure are installed via `brew install [package]`.
+Packages you would like to make sure are installed via `brew install`.
+
+    homebrew_upgrade_all_packages: no
+
+Whether to upgrade homebrew and all packages installed by homebrew. If you prefer to manually update packages via `brew` commands, leave this set to `no`.
 
     homebrew_taps:
       - caskroom/cask
