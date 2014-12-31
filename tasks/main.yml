@@ -6,7 +6,17 @@
     dest: "{{ homebrew_install_path }}"
     update: no
     accept_hostkey: yes
-  sudo: no
+  sudo: yes
+
+- name: Ensure proper permissions on homebrew and bin directories.
+  file:
+    path: "{{ item }}"
+    group: admin
+    mode: 0775
+  with_items:
+    - "{{ homebrew_install_path }}"
+    - "/usr/local"
+  sudo: yes
 
 - name: Check if homebrew binary is already in place.
   stat: path=/usr/local/bin/brew
@@ -18,21 +28,9 @@
     dest: /usr/local/bin/brew
     state: link
   when: homebrew_binary.stat.exists == false
-
-- name: Get list of installed homebrew packages.
-  command: brew list
-  register: homebrew_list
-  always_run: yes
-  changed_when: false
-
-- name: Install configured homebrew packages.
-  command: "brew install {{ item }}"
-  with_items: homebrew_installed_packages
-  register: brew_install
-  changed_when: "'already installed' not in brew_install.stderr"
-  when: "'{{ item }}' not in homebrew_list.stdout"
+  sudo: yes
 
 - include: tap.yml
-
+- include: brew.yml
 - include: cask.yml
   when: "'caskroom/cask' in homebrew_taps"

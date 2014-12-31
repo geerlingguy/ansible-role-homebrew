@@ -1,0 +1,13 @@
+---
+- name: Get list of installed homebrew packages.
+  command: brew list
+  register: homebrew_list
+  always_run: yes
+  changed_when: false
+
+- name: Install configured homebrew packages.
+  command: "brew install {{ item }}"
+  with_items: homebrew_installed_packages
+  register: brew_install
+  changed_when: "'already installed' not in brew_install.stderr"
+  when: "'{{ item }}' not in homebrew_list.stdout"
