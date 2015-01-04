@@ -52,7 +52,14 @@
   with_items: homebrew_taps
 
 # Cask.
-- name: Ensure configured cask applications are installed.
-  homebrew_cask: "name={{ item }} state=present"
+- name: Get list of apps installed with cask.
+  command: brew cask list
+  register: homebrew_cask_list
+  always_run: yes
+  changed_when: false
+
+- name: Install configured cask applications.
+  command: >
+    brew cask install {{ item }} --appdir={{ homebrew_cask_appdir }}
   with_items: homebrew_cask_apps
-  when: "'caskroom/cask' in homebrew_taps"
+  when: "'{{ item }}' not in homebrew_cask_list.stdout"
