@@ -1,6 +1,6 @@
 ---
 homebrew_install_path: /usr/local/homebrew
-homebrew_brew_location: /usr/local/bin/brew
+homebrew_brew_bin_path: /usr/local/bin
 
 homebrew_installed_packages:
   - ssh-copy-id
