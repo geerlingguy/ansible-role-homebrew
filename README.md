@@ -14,6 +14,10 @@ Available variables are listed below, along with default values (see `defaults/m
 
 The path where Homebrew will be installed. It is recommended you stick to the default, otherwise Homebrew might have some weird issues. If you change this variable, you should also manually create a symlink back to /usr/local so things work as Homebrew expects.
 
+    homebrew_brew_bin_path: /usr/local/bin
+
+The path where `brew` will be installed.
+
     homebrew_installed_packages:
       - ssh-copy-id
       - pv

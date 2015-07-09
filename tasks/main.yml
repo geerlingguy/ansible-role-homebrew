@@ -7,15 +7,13 @@
     state: directory
   sudo: yes
 
-- name: Ensure proper permissions on /usr/local dirs.
+- name: Ensure proper permissions on homebrew_brew_bin_path dirs.
   file:
-    path: "{{ item }}"
+    path: "{{ homebrew_brew_bin_path }}"
     group: admin
     mode: 0775
     state: directory
-  with_items:
-    - "/usr/local"
-    - "/usr/local/bin"
+    recurse: true
   sudo: yes
 
 - name: Ensure homebrew is installed.
@@ -27,13 +25,13 @@
     accept_hostkey: yes
 
 - name: Check if homebrew binary is already in place.
-  stat: path=/usr/local/bin/brew
+  stat: "path={{ homebrew_brew_bin_path }}/brew"
   register: homebrew_binary
 
-- name: Symlink brew to /usr/local/bin/brew.
+- name: Symlink brew to homebrew_brew_bin_path.
   file:
     src: "{{ homebrew_install_path }}/bin/brew"
-    dest: /usr/local/bin/brew
+    dest: "{{ homebrew_brew_bin_path }}/brew"
     state: link
   when: homebrew_binary.stat.exists == false
   sudo: yes
@@ -54,13 +52,14 @@
 
 # Cask.
 - name: Get list of apps installed with cask.
-  command: brew cask list
+  command: "{{ homebrew_brew_bin_path }}/brew cask list"
   register: homebrew_cask_list
   always_run: yes
   changed_when: false
 
+# Use command module instead of homebrew_cask so appdir can be used.
 - name: Install configured cask applications.
   command: >
-    brew cask install {{ item }} --appdir={{ homebrew_cask_appdir }}
+    {{ homebrew_brew_bin_path }}/brew cask install {{ item }} --appdir={{ homebrew_cask_appdir }}
   with_items: homebrew_cask_apps
   when: "'{{ item }}' not in homebrew_cask_list.stdout"
