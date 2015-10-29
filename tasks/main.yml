@@ -7,6 +7,14 @@
     state: directory
   sudo: yes
 
+- name: Ensure homebrew is installed.
+  git:
+    repo: git://github.com/Homebrew/homebrew.git
+    version: master
+    dest: "{{ homebrew_install_path }}"
+    update: no
+    accept_hostkey: yes
+
 - name: Ensure proper permissions on homebrew_brew_bin_path dirs.
   file:
     path: "{{ homebrew_brew_bin_path }}"
@@ -15,14 +23,6 @@
     state: directory
     recurse: true
   sudo: yes
-
-- name: Ensure homebrew is installed.
-  git:
-    repo: git://github.com/Homebrew/homebrew.git
-    version: master
-    dest: "{{ homebrew_install_path }}"
-    update: no
-    accept_hostkey: yes
 
 - name: Check if homebrew binary is already in place.
   stat: "path={{ homebrew_brew_bin_path }}/brew"
