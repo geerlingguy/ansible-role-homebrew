@@ -15,3 +15,5 @@ homebrew_cask_apps:
   - firefox
 
 homebrew_cask_appdir: /Applications
+
+skip_cask: false
