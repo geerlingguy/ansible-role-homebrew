@@ -64,3 +64,14 @@
     bash -l -c '{{ homebrew_brew_bin_path }}/brew cask install {{ item }} --appdir={{ homebrew_cask_appdir }}'
   with_items: homebrew_cask_apps
   when: "'{{ item }}' not in homebrew_cask_list.stdout"
+
+- name: Check for Brewfile.
+  stat:
+    path: "{{ homebrew_brewfile_path }}/Brewfile"
+  register: homebrew_brewfile
+
+- name: Install from Brewfile.
+  command: "brew bundle"
+  args:
+    chdir: "{{ homebrew_brewfile_path }}"
+  when: homebrew_brewfile.stat.exists and homebrew_use_brewfile

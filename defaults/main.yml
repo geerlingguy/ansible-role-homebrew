@@ -15,3 +15,6 @@ homebrew_cask_apps:
   - firefox
 
 homebrew_cask_appdir: /Applications
+
+homebrew_use_brewfile: true
+homebrew_brewfile_path: '~'
