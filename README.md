@@ -46,7 +46,7 @@ Directory where applications installed via `cask` should be installed.
 
 Whether to install via a Brewfile. If so, you will need to install the `homebrew/bundle` tap, which could be done within `homebrew_taps`. 
 
-    homebrew_brewfile_path: '~'
+    homebrew_brewfile_dir: '~'
 
 The directory where your Brewfile is located.
 
