@@ -42,6 +42,14 @@ Apps you would like to have installed via `cask`. Search for popular apps on htt
 
 Directory where applications installed via `cask` should be installed.
 
+    homebrew_use_brewfile: true
+
+Whether to install via a Brewfile. If so, you will need to install the `homebrew/bundle` tap, which could be done within `homebrew_taps`. 
+
+    homebrew_brewfile_dir: '~'
+
+The directory where your Brewfile is located.
+
 ## Dependencies
 
 None.
