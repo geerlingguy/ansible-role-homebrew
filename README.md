@@ -1,5 +1,7 @@
 # Ansible Role: Homebrew
 
+[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-homebrew.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-homebrew)
+
 Installs Homebrew on Mac OS X, and configures packages, taps, and cask apps according to supplied variables.
 
 ## Requirements
@@ -44,7 +46,7 @@ Directory where applications installed via `cask` should be installed.
 
     homebrew_use_brewfile: true
 
-Whether to install via a Brewfile. If so, you will need to install the `homebrew/bundle` tap, which could be done within `homebrew_taps`. 
+Whether to install via a Brewfile. If so, you will need to install the `homebrew/bundle` tap, which could be done within `homebrew_taps`.
 
     homebrew_brewfile_dir: '~'
 
