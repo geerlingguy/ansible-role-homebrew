@@ -5,7 +5,7 @@
     group: admin
     mode: 0775
     state: directory
-  become: root
+  become: true
 
 - name: Ensure homebrew is installed.
   git:
@@ -23,7 +23,7 @@
     mode: 0775
     state: directory
     recurse: true
-  become: root
+  become: true
 
 - name: Check if homebrew binary is already in place.
   stat: "path={{ homebrew_brew_bin_path }}/brew"
@@ -35,7 +35,7 @@
     dest: "{{ homebrew_brew_bin_path }}/brew"
     state: link
   when: homebrew_binary.stat.exists == false
-  become: root
+  become: true
 
 # Tap.
 - name: Ensure configured taps are tapped.
