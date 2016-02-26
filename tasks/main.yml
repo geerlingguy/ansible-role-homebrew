@@ -2,6 +2,7 @@
 - name: Get mac user's name
   shell: whoami
   register: mac_user
+  changed_when: false
 
 - name: Setup homebrew install path.
   file:
