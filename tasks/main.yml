@@ -33,7 +33,7 @@
   file:
     path: "{{ homebrew_install_path }}"
     state: directory
-    owner: "{{ mac_user }}"
+    owner: "{{ mac_user.stdout }}"
     group: admin
     recurse: true
   become: yes
