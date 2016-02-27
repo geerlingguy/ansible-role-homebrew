@@ -1,7 +1,7 @@
 ---
-- name: Get mac user's name
+- name: Get current account's username.
   shell: whoami
-  register: mac_user
+  register: homebrew_whoami
   changed_when: false
 
 - name: Setup homebrew install path.
@@ -29,11 +29,11 @@
     recurse: true
   become: yes
 
-- name: Ensure proper ownership on homebrew_install_path dirs.
+- name: Ensure proper ownership on homebrew_install_path subdirs.
   file:
     path: "{{ homebrew_install_path }}"
     state: directory
-    owner: "{{ mac_user.stdout }}"
+    owner: "{{ homebrew_whoami.stdout }}"
     group: admin
     recurse: true
   become: yes
