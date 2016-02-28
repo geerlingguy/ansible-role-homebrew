@@ -3,6 +3,7 @@
   shell: whoami
   register: homebrew_whoami
   changed_when: false
+  always_run: true
 
 - name: Setup homebrew install path.
   file:
