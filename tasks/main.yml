@@ -1,11 +1,17 @@
 ---
+- name: Get current account's username.
+  shell: whoami
+  register: homebrew_whoami
+  changed_when: false
+  always_run: true
+
 - name: Setup homebrew install path.
   file:
     path: "{{ homebrew_install_path }}"
     group: admin
     mode: 0775
     state: directory
-  become: root
+  become: yes
 
 - name: Ensure homebrew is installed.
   git:
@@ -19,11 +25,19 @@
 - name: Ensure proper permissions on homebrew_brew_bin_path dirs.
   file:
     path: "{{ homebrew_brew_bin_path }}"
-    group: admin
     mode: 0775
     state: directory
     recurse: true
-  become: root
+  become: yes
+
+- name: Ensure proper ownership on homebrew_install_path subdirs.
+  file:
+    path: "{{ homebrew_install_path }}"
+    state: directory
+    owner: "{{ homebrew_whoami.stdout }}"
+    group: admin
+    recurse: true
+  become: yes
 
 - name: Check if homebrew binary is already in place.
   stat: "path={{ homebrew_brew_bin_path }}/brew"
@@ -35,7 +49,7 @@
     dest: "{{ homebrew_brew_bin_path }}/brew"
     state: link
   when: homebrew_binary.stat.exists == false
-  become: root
+  become: yes
 
 # Tap.
 - name: Ensure configured taps are tapped.
