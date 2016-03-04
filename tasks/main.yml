@@ -54,12 +54,12 @@
 # Tap.
 - name: Ensure configured taps are tapped.
   homebrew_tap: "tap={{ item }} state=present"
-  with_items: homebrew_taps
+  with_items: '{{homebrew_taps}}'
 
 # Brew.
 - name: Ensure configured homebrew packages are installed.
   homebrew: "name={{ item }} state=present"
-  with_items: homebrew_installed_packages
+  with_items: '{{homebrew_installed_packages}}'
 
 - name: Upgrade all homebrew packages (if configured).
   homebrew: update_homebrew=yes upgrade_all=yes
@@ -77,7 +77,7 @@
 - name: Install configured cask applications.
   command: >
     bash -l -c '{{ homebrew_brew_bin_path }}/brew cask install {{ item }} --appdir={{ homebrew_cask_appdir }}'
-  with_items: homebrew_cask_apps
+  with_items: '{{homebrew_cask_apps}}'
   when: "'{{ item }}' not in homebrew_cask_list.stdout"
 
 - name: Check for Brewfile.
