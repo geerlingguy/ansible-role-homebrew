@@ -73,11 +73,12 @@
   always_run: yes
   changed_when: false
 
-# Use command module instead of homebrew_cask so appdir can be used.
+# Use environment module to set additional Cask options (e.g. appdir)
 - name: Install configured cask applications.
-  command: >
-    bash -l -c '{{ homebrew_brew_bin_path }}/brew cask install {{ item }} --appdir={{ homebrew_cask_appdir }}'
+  homebrew_cask: "name={{ item }} state=present"
   with_items: "{{ homebrew_cask_apps }}"
+  environment:
+    HOMEBREW_CASK_OPTS: "{{ homebrew_cask_opts }}"
   when: "'{{ item }}' not in homebrew_cask_list.stdout"
 
 - name: Check for Brewfile.
