@@ -5,6 +5,11 @@
   changed_when: false
   always_run: true
 
+- name: Change /usr/local owner if not empty.
+  shell: sudo chown -R $(USER):admin /usr/local
+  changed_when: false
+  always_run: true
+
 - name: Setup homebrew install path.
   file:
     path: "{{ homebrew_install_path }}"
