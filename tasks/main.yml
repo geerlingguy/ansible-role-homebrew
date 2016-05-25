@@ -13,14 +13,35 @@
     state: directory
   become: yes
 
-- name: Ensure homebrew is installed.
-  git:
-    repo: git://github.com/Homebrew/homebrew.git
-    version: master
-    dest: "{{ homebrew_install_path }}"
-    update: no
-    accept_hostkey: yes
-    depth: 1
+- name: Init git repo in homebrew_install_path
+  shell: git init -q
+  args:
+    chdir: "{{ homebrew_install_path }}"
+
+- name: Set repo remote url
+  shell: git config remote.origin.url https://github.com/Homebrew/brew
+  args:
+    chdir: "{{ homebrew_install_path }}"
+
+- name: Set repo remote fetch ref
+  shell: git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+  args:
+    chdir: "{{ homebrew_install_path }}"
+
+- name: Ensure line endings are not mudged on checkout
+  shell: git config core.autocrlf false
+  args:
+    chdir: "{{ homebrew_install_path }}"
+
+- name: Fetch repo origin
+  shell: git fetch origin master:refs/remotes/origin/master -n --depth=1
+  args:
+    chdir: "{{ homebrew_install_path }}"
+
+- name: Reset repo to master's head
+  shell: git reset --hard origin/master
+  args:
+    chdir: "{{ homebrew_install_path }}"
 
 - name: Ensure proper permissions on homebrew_brew_bin_path dirs.
   file:
