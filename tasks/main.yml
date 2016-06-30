@@ -13,14 +13,24 @@
     state: directory
   become: yes
 
-- name: Ensure homebrew is installed.
-  git:
-    repo: git://github.com/Homebrew/homebrew.git
+- stat: path="{{ homebrew_brew_bin_path }}/brew"
+  register: homebrew_binary
+
+- name: Clone homebrew.
+  git: 
+    repo: https://github.com/Homebrew/brew.git
+    dest: /tmp/brew
     version: master
-    dest: "{{ homebrew_install_path }}"
     update: no
     accept_hostkey: yes
     depth: 1
+  when: homebrew_binary.stat.islnk is not defined
+
+- name: Move homebrew to install directory
+  synchronize:
+    src: /tmp/brew/
+    dest: /usr/local
+  when: homebrew_binary.stat.islnk is not defined
 
 - name: Ensure proper permissions on homebrew_brew_bin_path dirs.
   file:
