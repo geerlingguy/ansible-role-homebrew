@@ -21,12 +21,15 @@ install:
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 
+  # Add a hosts file.
+  - "echo -e '[local]\nlocalhost ansible_connection=local' | sudo tee -a /etc/ansible/hosts > /dev/null"
+
 script:
   # Check the role/playbook's syntax.
   - "ansible-playbook tests/test.yml --syntax-check"
 
   # Test the playbook.
-  - "ansible-playbook tests/test.yml --connection=local"
+  - "ansible-playbook tests/test.yml"
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
