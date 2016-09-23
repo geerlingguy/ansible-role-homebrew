@@ -16,7 +16,7 @@ install:
   - sudo easy_install pip
 
   # Install Ansible.
-  - sudo pip install ansible cryptography
+  - sudo pip install ansible
 
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
@@ -32,6 +32,14 @@ script:
 
   # Test the playbook.
   - "ansible-playbook tests/test.yml"
+
+  # Test the playbook's idempotence.
+  - "ansible-playbook tests/test.yml | tee -a ${idempotence}"
+  - >
+    tail ${idempotence}
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
