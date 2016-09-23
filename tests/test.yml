@@ -1,6 +1,5 @@
 ---
 - hosts: localhost
-  become: yes
 
   roles:
     - ansible-role-homebrew
