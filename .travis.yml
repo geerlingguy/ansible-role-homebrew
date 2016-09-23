@@ -1,24 +1,46 @@
 ---
 sudo: required
-language: python
-python: "2.7"
-
-env:
-  - SITE=test.yml
+language: objective-c
+# 10.11 (see https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version)
+osx_image: xcode7.3
 
 before_install:
-  - sudo apt-get update -qq
+  # Uninstall existing brew installation.
+  - 'ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"'
+  - rm -rf /usr/local/Homebrew
+  - rm -rf /usr/local/Caskroom
+  - rm -rf /usr/local/bin/brew
 
 install:
+  # Install pip.
+  - sudo easy_install pip
+
   # Install Ansible.
-  - pip install ansible
+  - sudo pip install ansible
 
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 
+  # Add a hosts file.
+  - sudo mkdir -p /etc/ansible
+  - sudo touch /etc/ansible/hosts
+  - "echo -e '[local]\nlocalhost ansible_connection=local' | sudo tee -a /etc/ansible/hosts > /dev/null"
+
 script:
   # Check the role/playbook's syntax.
-  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+  - "ansible-playbook tests/test.yml --syntax-check"
+
+  # Test the playbook.
+  - "ansible-playbook tests/test.yml"
+
+  # Test the playbook's idempotence.
+  - idempotence=$(mktemp)
+  - "ansible-playbook tests/test.yml | tee -a ${idempotence}"
+  - >
+    tail ${idempotence}
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

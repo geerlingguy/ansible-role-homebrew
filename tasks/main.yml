@@ -39,7 +39,6 @@
     path: "{{ homebrew_brew_bin_path }}"
     mode: 0775
     state: directory
-    recurse: true
   become: yes
 
 - name: Ensure proper ownership on homebrew_install_path subdirs.
