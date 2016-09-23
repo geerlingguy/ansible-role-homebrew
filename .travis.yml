@@ -16,7 +16,7 @@ install:
   - sudo easy_install pip
 
   # Install Ansible.
-  - pip install ansible
+  - sudo pip install ansible
 
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
