@@ -1,6 +1,5 @@
 ---
 homebrew_repo: https://github.com/Homebrew/brew
-homebrew_tap_repo: https://github.com/Homebrew/homebrew-core
 
 homebrew_prefix: /usr/local
 homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
