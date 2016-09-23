@@ -1,6 +1,13 @@
 ---
-# OS X 10.11 (https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version)
-osx_image: xcode7.3
+language: objective-c
+
+# Versions: https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version
+matrix:
+  include:
+    # OS X 10.11
+    - osx_image: xcode7.3
+    # OS X 10.10
+    - osx_image: xcode7.1
 
 before_install:
   - brew update
