@@ -1,5 +1,9 @@
 ---
-homebrew_install_path: /usr/local
+homebrew_repo: https://github.com/Homebrew/brew
+homebrew_tap_repo: https://github.com/Homebrew/homebrew-core
+
+homebrew_prefix: /usr/local
+homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
 homebrew_brew_bin_path: /usr/local/bin
 
 homebrew_installed_packages:
@@ -9,6 +13,7 @@ homebrew_installed_packages:
 homebrew_upgrade_all_packages: no
 
 homebrew_taps:
+  - homebrew/core
   - caskroom/cask
 
 homebrew_cask_apps:

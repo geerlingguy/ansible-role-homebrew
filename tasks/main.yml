@@ -1,27 +1,39 @@
 ---
+# Homebrew setup prerequisites.
 - name: Get current account's username.
   shell: whoami
   register: homebrew_whoami
   changed_when: false
   always_run: true
 
-- name: Setup homebrew install path.
+- name: Ensure Homebrew parent directory has correct permissions.
   file:
-    path: "{{ homebrew_install_path }}"
-    group: admin
+    path: "{{ homebrew_prefix }}"
     mode: 0775
+    group: admin
     state: directory
   become: yes
 
-- name: Ensure homebrew is installed.
+- name: Ensure Homebrew directory exists.
+  file:
+    path: "{{ homebrew_install_path }}"
+    mode: 0775
+    owner: "{{ homebrew_whoami.stdout }}"
+    group: admin
+    state: directory
+  become: yes
+
+# Clone Homebrew.
+- name: Ensure Homebrew is installed.
   git:
-    repo: git://github.com/Homebrew/homebrew.git
+    repo: "{{ homebrew_repo }}"
     version: master
     dest: "{{ homebrew_install_path }}"
     update: no
     accept_hostkey: yes
     depth: 1
 
+# Adjust Homebrew permissions.
 - name: Ensure proper permissions on homebrew_brew_bin_path dirs.
   file:
     path: "{{ homebrew_brew_bin_path }}"
@@ -39,6 +51,7 @@
     recurse: true
   become: yes
 
+# Place brew binary in proper location and complete setup.
 - name: Check if homebrew binary is already in place.
   stat: "path={{ homebrew_brew_bin_path }}/brew"
   register: homebrew_binary
@@ -50,6 +63,10 @@
     state: link
   when: homebrew_binary.stat.exists == false
   become: yes
+
+- name: Force update brew after installation.
+  command: "{{ homebrew_brew_bin_path }}/brew update --force"
+  when: homebrew_binary.stat.exists == false
 
 # Tap.
 - name: Ensure configured taps are tapped.
