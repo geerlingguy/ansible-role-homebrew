@@ -1,16 +1,13 @@
 ---
 language: objective-c
-
-# Versions: https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version
-matrix:
-  include:
-    # OS X 10.11
-    - osx_image: xcode7.3
-    # OS X 10.10
-    - osx_image: xcode7.1
+# 10.11 (see https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version)
+osx_image: xcode7.3
 
 before_install:
-  - brew update
+  # Uninstall existing brew installation.
+  - 'ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"'
+  - rm -rf /usr/local/homebrew
+  - rm -rf /usr/local/bin/brew
 
 install:
   # Install Ansible.
@@ -24,7 +21,7 @@ script:
   - "ansible-playbook -i tests/inventory tests/test.yml --syntax-check"
 
   # Test the playbook.
-  - "ansible-playbook -i tests/inventory tests/test.yml -i test/inventory --connection=local"
+  - "ansible-playbook -i tests/inventory tests/test.yml --connection=local"
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
