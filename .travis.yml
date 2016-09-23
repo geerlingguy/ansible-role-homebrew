@@ -34,6 +34,7 @@ script:
   - "ansible-playbook tests/test.yml"
 
   # Test the playbook's idempotence.
+  - idempotence=$(mktemp)
   - "ansible-playbook tests/test.yml | tee -a ${idempotence}"
   - >
     tail ${idempotence}
