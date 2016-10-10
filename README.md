@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/geerlingguy/ansible-role-homebrew.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-homebrew)
 
-Installs Homebrew on Mac OS X, and configures packages, taps, and cask apps according to supplied variables.
+Installs [Homebrew](http://brew.sh/) on macOS, and configures packages, taps, and cask apps according to supplied variables.
 
 ## Requirements
 
@@ -12,9 +12,14 @@ None.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    homebrew_install_path: /usr/local
+    homebrew_repo: https://github.com/Homebrew/brew
 
-The path where Homebrew will be installed. It is recommended you stick to the default, otherwise Homebrew might have some weird issues. If you change this variable, you should also manually create a symlink back to /usr/local so things work as Homebrew expects.
+The GitHub repository for Homebrew core.
+
+    homebrew_prefix: /usr/local
+    homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
+
+The path where Homebrew will be installed (`homebrew_prefix` is the parent directory). It is recommended you stick to the default, otherwise Homebrew might have some weird issues. If you change this variable, you should also manually create a symlink back to /usr/local so things work as Homebrew expects.
 
     homebrew_brew_bin_path: /usr/local/bin
 
@@ -73,7 +78,9 @@ None.
         homebrew_installed_packages:
           - mysql
       roles:
-        - { role: geerlingguy.homebrew }
+        - geerlingguy.homebrew
+
+See the `tests/local-testing` directory for an example of running this role over Ansible's `local` connection. See also: [Mac Development Ansible Playbook](https://github.com/geerlingguy/mac-dev-playbook).
 
 ## License
 
@@ -81,4 +88,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).

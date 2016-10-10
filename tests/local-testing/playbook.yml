@@ -1,0 +1,5 @@
+---
+- hosts: local
+
+  roles:
+    - geerlingguy.homebrew
