@@ -89,13 +89,49 @@
   always_run: yes
   changed_when: false
 
-# Use command module instead of homebrew_cask so appdir can be used.
+- name: Set old and new Caskroom paths
+  set_fact:
+    old_caskroom_path: /opt/homebrew-cask/Caskroom
+    new_caskroom_path: /usr/local/Caskroom
+
+- name: "Check if the old Caskroom location {{ old_caskroom_path }} exists"
+  stat:
+    path: "{{ old_caskroom_path }}"
+  register: old_caskroom_stat
+
+- name: "Check if the new Caskroom location {{ new_caskroom_path }} exists"
+  stat:
+    path: "{{ new_caskroom_path }}"
+  register: new_caskroom_stat
+
+- name: "Move Caskroom from {{ old_caskroom_path }} to {{ new_caskroom_path }} if necessary"
+  command: mv "{{ old_caskroom_path }}" "{{ new_caskroom_path }}"
+  when: old_caskroom_stat.stat.exists and not new_caskroom_stat.stat.exists
+  become: yes
+
+- name: Ensure proper permissions on the Caskroom directory.
+  file:
+    path: "{{ new_caskroom_path }}"
+    mode: 0775
+    state: directory
+  become: yes
+
+- name: Ensure proper ownership on the Caskroom directory.
+  file:
+    path: "{{ new_caskroom_path }}"
+    state: directory
+    owner: "{{ homebrew_whoami.stdout }}"
+    group: admin
+    recurse: true
+  become: yes
+
 - name: Install configured cask applications.
   command: >
     bash -l -c '{{ homebrew_brew_bin_path }}/brew cask install {{ item }} --appdir={{ homebrew_cask_appdir }}'
   with_items: "{{ homebrew_cask_apps }}"
   when: "'{{ item }}' not in homebrew_cask_list.stdout"
 
+# Brewfile.
 - name: Check for Brewfile.
   stat:
     path: "{{ homebrew_brewfile_dir }}/Brewfile"
