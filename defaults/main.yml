@@ -5,18 +5,29 @@ homebrew_prefix: /usr/local
 homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
 homebrew_brew_bin_path: /usr/local/bin
 
-homebrew_installed_packages:
-  - ssh-copy-id
-  - pv
+# List of packages to be installed, e.g.
+#   homebrew_installed_packages:
+#     - ssh-copy-id
+#     - pv
+homebrew_installed_packages: []
 
 homebrew_upgrade_all_packages: no
 
-homebrew_taps:
-  - homebrew/core
-  - caskroom/cask
+# List of taps to be added, e.g.
+#   homebrew_taps:
+#     - homebrew/dupes
+#     - homebrew/science
+# Note that homebrew/core is added automatically when brew is installed
+# and caskroom/cask will be added as soon as the first cask is installed
+# (e.g. using homebrew_cask_apps below); see also
+# https://github.com/Homebrew/brew/blob/master/docs/Interesting-Taps-%26-Forks.md
+homebrew_taps: []
 
-homebrew_cask_apps:
-  - firefox
+# List of casks to be installed, e.g.
+#   homebrew_cask_apps:
+#     - firefox
+# see also https://caskroom.github.io
+homebrew_cask_apps: []
 
 homebrew_cask_appdir: /Applications
 
