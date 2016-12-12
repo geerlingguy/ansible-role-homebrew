@@ -23,6 +23,10 @@
     state: directory
   become: yes
 
+- name: Agree to Apple Xcode license agreements.
+  command: xcodebuild -license accept
+  become: yes
+
 # Clone Homebrew.
 - name: Ensure Homebrew is installed.
   git:
