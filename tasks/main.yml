@@ -10,7 +10,7 @@
   file:
     path: "{{ homebrew_prefix }}"
     mode: 0775
-    group: admin
+    group: "{{ homebrew_admin_group }}"
     state: directory
   become: yes
 
@@ -19,7 +19,7 @@
     path: "{{ homebrew_install_path }}"
     mode: 0775
     owner: "{{ homebrew_whoami.stdout }}"
-    group: admin
+    group: "{{ homebrew_admin_group }}"
     state: directory
   become: yes
 
@@ -46,7 +46,7 @@
     path: "{{ homebrew_install_path }}"
     state: directory
     owner: "{{ homebrew_whoami.stdout }}"
-    group: admin
+    group: "{{ homebrew_admin_group }}"
     recurse: true
   become: yes
 
@@ -62,6 +62,7 @@
     state: link
   when: homebrew_binary.stat.exists == false
   become: yes
+  when: ansible_os_family == "Darwin"
 
 - name: Force update brew after installation.
   command: "{{ homebrew_brew_bin_path }}/brew update --force"
@@ -76,10 +77,14 @@
 - name: Ensure configured homebrew packages are installed.
   homebrew: "name={{ item }} state=present"
   with_items: "{{ homebrew_installed_packages }}"
+  environment:
+    PATH: "{{ homebrew_brew_bin_path }}:{{ ansible_env.PATH }}"
 
 - name: Upgrade all homebrew packages (if configured).
   homebrew: update_homebrew=yes upgrade_all=yes
   when: homebrew_upgrade_all_packages
+  environment:
+    PATH: "{{ homebrew_brew_bin_path }}:{{ ansible_env.PATH }}"
 
 # Cask.
 - name: Get list of apps installed with cask.
@@ -88,11 +93,13 @@
   register: homebrew_cask_list
   always_run: yes
   changed_when: false
+  when: ansible_os_family == "Darwin"
 
 - name: Set old and new Caskroom paths
   set_fact:
     old_caskroom_path: /opt/homebrew-cask/Caskroom
     new_caskroom_path: /usr/local/Caskroom
+  when: ansible_os_family == "Darwin"
 
 - name: "Check if the old Caskroom location {{ old_caskroom_path }} exists"
   stat:
@@ -115,21 +122,24 @@
     mode: 0775
     state: directory
   become: yes
+  when: ansible_os_family == "Darwin"
 
 - name: Ensure proper ownership on the Caskroom directory.
   file:
     path: "{{ new_caskroom_path }}"
     state: directory
     owner: "{{ homebrew_whoami.stdout }}"
-    group: admin
+    group: "{{ homebrew_admin_group }}"
     recurse: true
   become: yes
+  when: ansible_os_family == "Darwin"
 
 - name: Install configured cask applications.
   command: >
     bash -l -c '{{ homebrew_brew_bin_path }}/brew cask install {{ item }} --appdir={{ homebrew_cask_appdir }}'
   with_items: "{{ homebrew_cask_apps }}"
   when: "'{{ item }}' not in homebrew_cask_list.stdout"
+  when: ansible_os_family == "Darwin"
 
 # Brewfile.
 - name: Check for Brewfile.
