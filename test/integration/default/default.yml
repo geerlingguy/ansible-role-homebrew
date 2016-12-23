@@ -1,0 +1,16 @@
+---
+# host to test against
+- hosts: default-centos
+  remote_user: root
+
+  roles:
+    # name of role to test
+    - role: geerlingguy.homebrew
+  vars:
+    homebrew_install_path: /tmp/homebrew
+    homebrew_brew_bin_path: /tmp/homebrew/bin
+    homebrew_installed_packages:
+      - patchelf
+    homebrew_taps:
+      - homebrew/core
+    homebrew_admin_group: wheel

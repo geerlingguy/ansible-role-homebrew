@@ -1,0 +1,32 @@
+---
+driver:
+  name: docker
+  use_sudo: false
+
+provisioner:
+  name: ansible_playbook
+  roles_path: roles
+  hosts: default-centos
+  require_ansible_repo: true
+  ansible_verbose: true
+  ansible_version: latest
+  require_chef_for_busser: false
+  additional_copy_path: ../geerlingguy.homebrew
+
+transport:
+  name: rsync
+platforms:
+  - name: centos
+    driver_config:
+      image: centos
+      platform: rhel
+
+verifier:
+  name: serverspec
+  sudo_path: true
+
+suites:
+  - name: default
+    # verifier:
+    #   patterns:
+    #   - roles/tomcat/spec/tomcat_spec.rb
