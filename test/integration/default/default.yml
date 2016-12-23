@@ -1,7 +1,8 @@
 ---
 # host to test against
+
 - hosts: default-centos
-  remote_user: root
+  remote_user: kitchen
 
   roles:
     # name of role to test
@@ -10,7 +11,11 @@
     homebrew_install_path: /tmp/homebrew
     homebrew_brew_bin_path: /tmp/homebrew/bin
     homebrew_installed_packages:
+      # Packages that don't require any lengthy compilation (for testing only):
       - patchelf
+      - zlib
+      # TODO: add more, preferabily something very lightweight.
     homebrew_taps:
       - homebrew/core
-    homebrew_admin_group: wheel
+    homebrew_admin_group: kitchen
+    homebrew_repo: https://github.com/Linuxbrew/brew

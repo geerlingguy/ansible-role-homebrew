@@ -8,10 +8,14 @@ provisioner:
   roles_path: roles
   hosts: default-centos
   require_ansible_repo: true
+  ansible_sudo: false
   ansible_verbose: true
+  ansible_verbosity: 4
   ansible_version: latest
   require_chef_for_busser: false
   additional_copy_path: ../geerlingguy.homebrew
+  env_vars:
+    ANSIBLE_KEEP_REMOTE_FILES: 1
 
 transport:
   name: rsync
@@ -23,7 +27,7 @@ platforms:
 
 verifier:
   name: serverspec
-  sudo_path: true
+  #sudo_path: true
 
 suites:
   - name: default

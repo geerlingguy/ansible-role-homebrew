@@ -6,6 +6,39 @@
   changed_when: false
   always_run: true
 
+- debug:
+    msg: "Installing Homebrew as user {{ homebrew_whoami.stdout }}"
+
+# Check if Ruby is available
+- name: Check if Ruby is installed
+  shell: which ruby
+  register: which_ruby
+  ignore_errors: yes
+
+- name: Install Ruby from a package on Linux
+  package:
+    name: ruby
+    state: installed
+  when: ansible_os_family != "Darwin" and which_ruby.rc != 0
+
+- name: Install the 'Development tools' package group on RedHat-based systems
+  yum:
+    name: "@Development tools"
+    state: present
+  become: yes
+  when: ansible_os_family == "RedHat"
+
+- name: Make sure some prerequisites are installed on Linux
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - gcc
+    - bzip2
+    - make
+  become: yes
+  when: ansible_os_family not in ["Darwin", "RedHat"]
+
 - name: Ensure Homebrew parent directory has correct permissions.
   file:
     path: "{{ homebrew_prefix }}"
@@ -50,12 +83,19 @@
     recurse: true
   become: yes
 
+- name: Create the Library/Taps directory with correct permissions on Linux
+  file:
+    path: "{{ homebrew_install_path }}/Library/Taps"
+    mode: 0775
+    group: "{{ homebrew_admin_group }}"
+    state: directory
+  when: ansible_os_family != "Darwin"
 # Place brew binary in proper location and complete setup.
 - name: Check if homebrew binary is already in place.
   stat: "path={{ homebrew_brew_bin_path }}/brew"
   register: homebrew_binary
 
-- name: Symlink brew to homebrew_brew_bin_path.
+- name: Symlink brew to homebrew_brew_bin_path
   file:
     src: "{{ homebrew_install_path }}/bin/brew"
     dest: "{{ homebrew_brew_bin_path }}/brew"
@@ -69,24 +109,32 @@
   when: homebrew_binary.stat.exists == false
 
 # Tap.
-- name: Ensure configured taps are tapped.
+- name: Ensure configured taps are tapped on Mac OS X
   homebrew_tap: "tap={{ item }} state=present"
   with_items: "{{ homebrew_taps }}"
+  when: ansible_os_family == "Darwin"
+
+- name: Ensure configured taps are tapped on Linux
+  shell: "{{ homebrew_brew_bin_path }}/brew tap {{ item }}"
+  with_items: "{{ homebrew_taps }}"
+  when: ansible_os_family != "Darwin"
 
 # Brew.
 - name: Ensure configured homebrew packages are installed.
-  homebrew: "name={{ item }} state=present"
+  homebrew:
+    name: "{{ item }}"
+    state: present
+    path: "{{ homebrew_brew_bin_path }}"
   with_items: "{{ homebrew_installed_packages }}"
-  environment:
-    PATH: "{{ homebrew_brew_bin_path }}:{{ ansible_env.PATH }}"
 
 - name: Upgrade all homebrew packages (if configured).
-  homebrew: update_homebrew=yes upgrade_all=yes
+  homebrew:
+    update_homebrew: yes
+    upgrade_all: yes
+    path: "{{ homebrew_brew_bin_path }}"
   when: homebrew_upgrade_all_packages
-  environment:
-    PATH: "{{ homebrew_brew_bin_path }}:{{ ansible_env.PATH }}"
 
-# Cask.
+# Cask (Mac OS X only)
 - name: Get list of apps installed with cask.
   command: >
     bash -l -c '{{ homebrew_brew_bin_path }}/brew cask list'
@@ -105,16 +153,19 @@
   stat:
     path: "{{ old_caskroom_path }}"
   register: old_caskroom_stat
+  when: ansible_os_family == "Darwin"
 
 - name: "Check if the new Caskroom location {{ new_caskroom_path }} exists"
   stat:
     path: "{{ new_caskroom_path }}"
   register: new_caskroom_stat
+  when: ansible_os_family == "Darwin"
 
 - name: "Move Caskroom from {{ old_caskroom_path }} to {{ new_caskroom_path }} if necessary"
   command: mv "{{ old_caskroom_path }}" "{{ new_caskroom_path }}"
   when: old_caskroom_stat.stat.exists and not new_caskroom_stat.stat.exists
   become: yes
+  when: ansible_os_family == "Darwin"
 
 - name: Ensure proper permissions on the Caskroom directory.
   file:
