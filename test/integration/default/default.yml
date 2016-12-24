@@ -15,4 +15,4 @@
       # TODO: add more, preferabily something very lightweight.
     homebrew_taps:
       - homebrew/core
-    homebrew_admin_group: kitchen
+    homebrew_group: kitchen

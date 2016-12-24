@@ -46,7 +46,7 @@
   file:
     path: "{{ homebrew_prefix }}"
     mode: 0775
-    group: "{{ homebrew_admin_group }}"
+    group: "{{ homebrew_group }}"
     state: directory
   become: yes
 
@@ -55,7 +55,7 @@
     path: "{{ homebrew_install_path }}"
     mode: 0775
     owner: "{{ homebrew_whoami.stdout }}"
-    group: "{{ homebrew_admin_group }}"
+    group: "{{ homebrew_group }}"
     state: directory
   become: yes
 
@@ -82,7 +82,7 @@
     path: "{{ homebrew_install_path }}"
     state: directory
     owner: "{{ homebrew_whoami.stdout }}"
-    group: "{{ homebrew_admin_group }}"
+    group: "{{ homebrew_group }}"
     recurse: true
   become: yes
 
@@ -90,7 +90,7 @@
   file:
     path: "{{ homebrew_install_path }}/Library/Taps"
     mode: 0775
-    group: "{{ homebrew_admin_group }}"
+    group: "{{ homebrew_group }}"
     state: directory
   when: ansible_os_family != "Darwin"
 # Place brew binary in proper location and complete setup.
@@ -178,7 +178,7 @@
       path: "{{ new_caskroom_path }}"
       state: directory
       owner: "{{ homebrew_whoami.stdout }}"
-      group: "{{ homebrew_admin_group }}"
+      group: "{{ homebrew_group }}"
       recurse: true
     become: yes
 
