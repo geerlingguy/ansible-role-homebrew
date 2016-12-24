@@ -1,9 +1,13 @@
 ---
-homebrew_repo: https://github.com/Homebrew/brew
+# These defaults go into determining homebrew_repo, unless it is set directly.
+homebrew_repo_darwin: https://github.com/Homebrew/brew
+homebrew_repo_linux: https://github.com/Linuxbrew/brew
 
-homebrew_prefix: /usr/local
-homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
-homebrew_brew_bin_path: /usr/local/bin
+# These will determine homebrew_prefix, homebrew_install_path, and homebrew_bin_path.
+# For Linuxbrew, the defaults are based on the user's home directory.
+homebrew_prefix_darwin: /usr/local
+homebrew_install_path_darwin: "{{ homebrew_prefix }}/Homebrew"
+homebrew_brew_bin_path_darwin: /usr/local/bin
 
 homebrew_installed_packages:
   - ssh-copy-id

@@ -8,8 +8,6 @@
     # name of role to test
     - role: geerlingguy.homebrew
   vars:
-    homebrew_install_path: /tmp/homebrew
-    homebrew_brew_bin_path: /tmp/homebrew/bin
     homebrew_installed_packages:
       # Packages that don't require any lengthy compilation (for testing only):
       - patchelf
@@ -18,4 +16,3 @@
     homebrew_taps:
       - homebrew/core
     homebrew_admin_group: kitchen
-    homebrew_repo: https://github.com/Linuxbrew/brew

@@ -6,6 +6,8 @@
   changed_when: false
   always_run: true
 
+- include: set_vars.yml
+
 - debug:
     msg: "Installing Homebrew as user '{{ homebrew_whoami.stdout }}'"
 

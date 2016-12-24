@@ -39,4 +39,4 @@ suites:
   - name: default
     verifier:
       patterns:
-        - geerlingguy.homebrew/test/integration/default/serverspec/localhost/default_spec.rb
+        - geerlingguy.homebrew/test/integration/default/serverspec/default_spec.rb
