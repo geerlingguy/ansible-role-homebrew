@@ -1,0 +1,18 @@
+---
+# host to test against
+
+- hosts: default-centos
+  remote_user: kitchen
+
+  roles:
+    # name of role to test
+    - role: geerlingguy.homebrew
+  vars:
+    homebrew_installed_packages:
+      # Packages that don't require any lengthy compilation (for testing only):
+      - patchelf
+      - zlib
+      # TODO: add more, preferabily something very lightweight.
+    homebrew_taps:
+      - homebrew/core
+    homebrew_group: kitchen

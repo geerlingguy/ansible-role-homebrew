@@ -1,0 +1,48 @@
+---
+<%
+role_name = File.basename(Dir.pwd)
+%>
+driver:
+  name: docker
+  use_sudo: false
+
+provisioner:
+  name: ansible_playbook
+  roles_path: roles
+  hosts: default-centos
+  require_ansible_repo: true
+  ansible_sudo: false
+  ansible_verbose: true
+  ansible_verbosity: 4
+  ansible_version: latest
+  require_chef_for_busser: false
+  # The following is needed to tell kitchen-ansible to install the entire directory this role is
+  # in into a separate subdirectory in /tmp/kitchen. If we just use '.' here, it will copy all
+  # the contents of the role into /tmp/kitchen, which is not what we want. Note that the below
+  # might work in unexpected ways if the role's directory is a symlink.
+  additional_copy_path: ../<%= role_name %>
+  env_vars:
+    ANSIBLE_KEEP_REMOTE_FILES: 1
+
+transport:
+  name: rsync
+
+platforms:
+  - name: centos
+    driver_config:
+      image: centos
+      platform: rhel
+
+verifier:
+  name: serverspec
+  ssh_options:
+    disable_sudo: true
+  #sudo_path: true
+
+suites:
+  - name: default
+    verifier:
+      patterns:
+        # The role might be named differently in the test environment, depending on what the git
+        # repository directory is named.
+        - <%= role_name %>/test/integration/default/serverspec/default_spec.rb
