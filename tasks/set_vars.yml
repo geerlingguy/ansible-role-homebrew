@@ -1,3 +1,7 @@
+# -------------------------------------------------------------------------------------------------
+# Setting homebrew_repo
+# -------------------------------------------------------------------------------------------------
+
 - block:
   - set_fact:
       homebrew_repo: "{{ homebrew_repo_darwin }}"
@@ -7,6 +11,13 @@
       homebrew_repo: "{{ homebrew_repo_linux }}"
     when: ansible_os_family != "Darwin"
   when: homebrew_repo is not defined
+
+- debug:
+    var: homebrew_repo
+
+# -------------------------------------------------------------------------------------------------
+# Setting homebrew_install_path
+# -------------------------------------------------------------------------------------------------
 
 - block:
   - set_fact:
@@ -18,6 +29,13 @@
     when: ansible_os_family != "Darwin"
   when: homebrew_install_path is not defined
 
+- debug:
+    var: homebrew_install_path
+
+# -------------------------------------------------------------------------------------------------
+# Setting homebrew_prefix
+# -------------------------------------------------------------------------------------------------
+
 - block:
   - set_fact:
       homebrew_prefix: "{{ homebrew_prefix_darwin }}"
@@ -27,6 +45,13 @@
       homebrew_prefix: "{{ homebrew_install_path }}"
     when: ansible_os_family != "Darwin"
   when: homebrew_prefix is not defined
+
+- debug:
+    var: homebrew_prefix
+
+# -------------------------------------------------------------------------------------------------
+# Setting homebrew_bin_path
+# -------------------------------------------------------------------------------------------------
 
 - block:
   - set_fact:
@@ -38,3 +63,5 @@
     when: ansible_os_family != "Darwin"
   when: homebrew_brew_bin_path is not defined
 
+- debug:
+    var: homebrew_bin_path

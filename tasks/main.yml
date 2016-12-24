@@ -103,9 +103,8 @@
     src: "{{ homebrew_install_path }}/bin/brew"
     dest: "{{ homebrew_brew_bin_path }}/brew"
     state: link
-  when: homebrew_binary.stat.exists == false
+  when: not homebrew_binary.stat.exists
   become: yes
-  when: ansible_os_family == "Darwin"
 
 - name: Force update brew after installation.
   command: "{{ homebrew_brew_bin_path }}/brew update --force"

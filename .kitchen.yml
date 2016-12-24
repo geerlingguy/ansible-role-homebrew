@@ -1,4 +1,7 @@
 ---
+<%
+role_name = File.basename(Dir.pwd)
+%>
 driver:
   name: docker
   use_sudo: false
@@ -17,12 +20,13 @@ provisioner:
   # in into a separate subdirectory in /tmp/kitchen. If we just use '.' here, it will copy all
   # the contents of the role into /tmp/kitchen, which is not what we want. Note that the below
   # might work in unexpected ways if the role's directory is a symlink.
-  additional_copy_path: ../<%= File.basename(Dir.pwd) %>
+  additional_copy_path: ../<%= role_name %>
   env_vars:
     ANSIBLE_KEEP_REMOTE_FILES: 1
 
 transport:
   name: rsync
+
 platforms:
   - name: centos
     driver_config:
@@ -39,4 +43,6 @@ suites:
   - name: default
     verifier:
       patterns:
-        - geerlingguy.homebrew/test/integration/default/serverspec/default_spec.rb
+        # The role might be named differently in the test environment, depending on what the git
+        # repository directory is named.
+        - <%= role_name %>/test/integration/default/serverspec/default_spec.rb
