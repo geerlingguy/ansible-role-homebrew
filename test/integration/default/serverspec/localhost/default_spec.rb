@@ -1,11 +1,14 @@
+$LOAD_PATH.unshift(File.dirname(File.dirname(__FILE__)))
 require 'spec_helper'
 
 describe 'ansible-geerlingguy.homebrew::default' do
 
-  ## serverspec tests go here
-  #
-  # describe package('ruby2.2') do
-  #   it { should be_installed.by('apt') }
-  # end
+  describe package('ruby') do
+    it { should be_installed }
+  end
+
+  describe file('/tmp/homebrew') do
+    it { should be_directory }
+  end
 
 end

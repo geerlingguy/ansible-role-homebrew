@@ -13,7 +13,11 @@ provisioner:
   ansible_verbosity: 4
   ansible_version: latest
   require_chef_for_busser: false
-  additional_copy_path: ../geerlingguy.homebrew
+  # The following is needed to tell kitchen-ansible to install the entire directory this role is
+  # in into a separate subdirectory in /tmp/kitchen. If we just use '.' here, it will copy all
+  # the contents of the role into /tmp/kitchen, which is not what we want. Note that the below
+  # might work in unexpected ways if the role's directory is a symlink.
+  additional_copy_path: ../<%= File.basename(Dir.pwd) %>
   env_vars:
     ANSIBLE_KEEP_REMOTE_FILES: 1
 
@@ -27,10 +31,12 @@ platforms:
 
 verifier:
   name: serverspec
+  ssh_options:
+    disable_sudo: true
   #sudo_path: true
 
 suites:
   - name: default
-    # verifier:
-    #   patterns:
-    #   - roles/tomcat/spec/tomcat_spec.rb
+    verifier:
+      patterns:
+        - geerlingguy.homebrew/test/integration/default/serverspec/localhost/default_spec.rb
