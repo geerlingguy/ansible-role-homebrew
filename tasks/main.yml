@@ -16,6 +16,7 @@
   shell: which ruby
   register: which_ruby
   ignore_errors: yes
+  when: ansible_os_family != "Darwin"
 
 - name: Install Ruby from a package on Linux
   package:
