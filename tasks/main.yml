@@ -1,7 +1,7 @@
 ---
 # Homebrew setup prerequisites.
 - name: Get current account's username.
-  shell: whoami
+  command: whoami
   register: homebrew_whoami
   changed_when: false
   always_run: true
@@ -9,6 +9,7 @@
 - name: Ensure Homebrew parent directory has correct permissions.
   file:
     path: "{{ homebrew_prefix }}"
+    owner: root
     group: admin
     state: directory
     mode: 0775
