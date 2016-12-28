@@ -1,5 +1,6 @@
 ---
-dependencies: []
+dependencies:
+  - role: elliotweiser.osx-command-line-tools
 
 galaxy_info:
   author: geerlingguy
@@ -8,7 +9,7 @@ galaxy_info:
   license: "license (BSD, MIT)"
   min_ansible_version: 1.9
   platforms:
-    - name: GenericUNIX
+    - name: MacOSX
       versions:
         - all
         - any
