@@ -34,11 +34,13 @@
     depth: 1
 
 # Adjust Homebrew permissions.
-- name: Ensure proper permissions on homebrew_brew_bin_path dirs.
+- name: Ensure proper permissions and ownership on homebrew_brew_bin_path dirs.
   file:
     path: "{{ homebrew_brew_bin_path }}"
     mode: 0775
     state: directory
+    owner: "{{ homebrew_whoami.stdout }}"
+    group: admin
   become: yes
 
 - name: Ensure proper ownership on homebrew_install_path subdirs.
