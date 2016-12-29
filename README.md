@@ -59,7 +59,7 @@ The directory where your Brewfile is located.
 
 ## Dependencies
 
-* [elliotweiser.osx-command-line-tools](https://galaxy.ansible.com/elliotweiser/osx-command-line-tools/)
+  - [elliotweiser.osx-command-line-tools](https://galaxy.ansible.com/elliotweiser/osx-command-line-tools/)
 
 ## Example Playbook
 
