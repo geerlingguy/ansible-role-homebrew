@@ -9,18 +9,18 @@
 - name: Ensure Homebrew parent directory has correct permissions.
   file:
     path: "{{ homebrew_prefix }}"
-    mode: 0775
     group: admin
     state: directory
+    mode: 0775
   become: yes
 
 - name: Ensure Homebrew directory exists.
   file:
     path: "{{ homebrew_install_path }}"
-    mode: 0775
     owner: "{{ homebrew_whoami.stdout }}"
     group: admin
     state: directory
+    mode: 0775
   become: yes
 
 # Clone Homebrew.
@@ -37,10 +37,10 @@
 - name: Ensure proper permissions and ownership on homebrew_brew_bin_path dirs.
   file:
     path: "{{ homebrew_brew_bin_path }}"
-    mode: 0775
     state: directory
     owner: "{{ homebrew_whoami.stdout }}"
     group: admin
+    mode: 0775
   become: yes
 
 - name: Ensure proper ownership on homebrew_install_path subdirs.
