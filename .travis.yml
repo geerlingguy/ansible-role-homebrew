@@ -1,15 +1,34 @@
 ---
 sudo: required
 language: objective-c
-# 10.11 (see https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version)
-osx_image: xcode7.3
+
+# When you define multiple variables per line in the env array (matrix variables), one build is triggered per item.
+# see https://docs.travis-ci.com/user/environment-variables/#Defining-Multiple-Variables-per-Item
+# see https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version
+env:
+  - OSX_IMAGE_KEY=xcode7.3 OSX_IMAGE_VERSION=10.11
+  - OSX_IMAGE_KEY=xcode8.2 OSX_IMAGE_VERSION=10.12
+
+osx_image: $OSX_IMAGE_KEY
 
 before_install:
   # Uninstall existing brew installation.
   - 'ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"'
+
+  # Give permissions needed for Sierra macOS
+  - if [ "$OSX_IMAGE_VERSION" == "10.12" ]; then
+    sudo chown -R $(whoami) /usr/local;
+    fi
+
   - rm -rf /usr/local/Homebrew
   - rm -rf /usr/local/Caskroom
   - rm -rf /usr/local/bin/brew
+
+  # Reset permissions for Sierra macOS
+  - if [ "$OSX_IMAGE_VERSION" == "10.12" ]; then
+    sudo chmod 0755 /usr/local;
+    sudo chown root:wheel /usr/local;
+    fi
 
 install:
   # Install pip.
