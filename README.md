@@ -70,6 +70,10 @@ Whether to install via a Brewfile. If so, you will need to install the `homebrew
 
 The directory where your Brewfile is located.
 
+    homebrew_clear_cache: false
+
+Set to `true` to remove the Hombrew cache after any new software is installed.
+
 ## Dependencies
 
   - [elliotweiser.osx-command-line-tools][dep-osx-clt-role]
