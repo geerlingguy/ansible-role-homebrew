@@ -1,11 +1,5 @@
 ---
 # Homebrew setup prerequisites.
-- name: Get current account's username.
-  command: whoami
-  register: homebrew_whoami
-  changed_when: false
-  always_run: true
-
 - name: Ensure Homebrew parent directory has correct permissions.
   file:
     path: "{{ homebrew_prefix }}"
@@ -18,7 +12,7 @@
 - name: Ensure Homebrew directory exists.
   file:
     path: "{{ homebrew_install_path }}"
-    owner: "{{ homebrew_whoami.stdout }}"
+    owner: "{{ ansible_user_id }}"
     group: admin
     state: directory
     mode: 0775
@@ -39,7 +33,7 @@
   file:
     path: "{{ homebrew_brew_bin_path }}"
     state: directory
-    owner: "{{ homebrew_whoami.stdout }}"
+    owner: "{{ ansible_user_id }}"
     group: admin
     mode: 0775
   become: yes
@@ -48,7 +42,7 @@
   file:
     path: "{{ homebrew_install_path }}"
     state: directory
-    owner: "{{ homebrew_whoami.stdout }}"
+    owner: "{{ ansible_user_id }}"
     group: admin
     recurse: true
   become: yes
