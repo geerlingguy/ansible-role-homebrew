@@ -45,9 +45,10 @@ Taps you would like to make sure Homebrew has tapped.
 
 Apps you would like to have installed via `cask`. Search for popular apps on http://caskroom.io/ to see if they're available for install via Cask. Cask will not be used if it is not included in the list of taps in the `homebrew_taps` variable.
 
-    homebrew_cask_appdir: /Applications
+    homebrew_cask_opts: >
+      --appdir=/Applications
 
-Directory where applications installed via `cask` should be installed.
+Additional options for `cask`. See [official documentation](https://github.com/caskroom/homebrew-cask/blob/master/USAGE.md#options) for an exhaustive list of options.
 
     homebrew_use_brewfile: true
 

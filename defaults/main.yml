@@ -18,7 +18,9 @@ homebrew_taps:
 homebrew_cask_apps:
   - firefox
 
-homebrew_cask_appdir: /Applications
+# add more caskroom options here
+homebrew_cask_opts: >
+  --appdir=/Applications
 
 homebrew_use_brewfile: true
 homebrew_brewfile_dir: '~'
