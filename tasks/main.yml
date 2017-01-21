@@ -79,19 +79,12 @@
   when: homebrew_upgrade_all_packages
 
 # Cask.
-- name: Get list of apps installed with cask.
-  command: >
-    bash -l -c '{{ homebrew_brew_bin_path }}/brew cask list'
-  register: homebrew_cask_list
-  always_run: yes
-  changed_when: false
-
-# Use command module instead of homebrew_cask so appdir can be used.
 - name: Install configured cask applications.
-  command: >
-    bash -l -c '{{ homebrew_brew_bin_path }}/brew cask install {{ item }} --appdir={{ homebrew_cask_appdir }}'
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+    install_options: "appdir={{ homebrew_cask_appdir }}"
   with_items: "{{ homebrew_cask_apps }}"
-  when: "'{{ item }}' not in homebrew_cask_list.stdout"
 
 - name: Check for Brewfile.
   stat:
