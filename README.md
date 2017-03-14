@@ -31,6 +31,10 @@ The path where `brew` will be installed.
 
 Packages you would like to make sure are installed via `brew install`.
 
+    homebrew_uninstalled_packages: []
+
+Packages you would like to make sure are _uninstalled_.
+
     homebrew_upgrade_all_packages: no
 
 Whether to upgrade homebrew and all packages installed by homebrew. If you prefer to manually update packages via `brew` commands, leave this set to `no`.
