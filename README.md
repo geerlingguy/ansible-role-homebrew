@@ -28,8 +28,18 @@ The path where `brew` will be installed.
     homebrew_installed_packages:
       - ssh-copy-id
       - pv
+      - vim
 
 Packages you would like to make sure are installed via `brew install`.
+
+    homebrew_package_options:
+      pv:
+        - with-gettext
+      vim:
+        - with-lua
+        - with-python3
+
+Optional list of package options to add to `brew install`.
 
     homebrew_upgrade_all_packages: no
 

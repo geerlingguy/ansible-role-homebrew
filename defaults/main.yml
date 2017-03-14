@@ -9,6 +9,8 @@ homebrew_installed_packages:
   - ssh-copy-id
   - pv
 
+homebrew_package_options:
+
 homebrew_upgrade_all_packages: no
 
 homebrew_taps:
