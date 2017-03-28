@@ -98,3 +98,8 @@
 - name: Install from Brewfile.
   command: "brew bundle chdir={{ homebrew_brewfile_dir }}"
   when: homebrew_brewfile.stat.exists and homebrew_use_brewfile
+
+# Services.
+- name: Start services at login.
+  command: "brew services start {{ item }}"
+  with_items: "{{ homebrew_services }}"
