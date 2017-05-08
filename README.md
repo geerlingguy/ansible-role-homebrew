@@ -28,6 +28,7 @@ The path where `brew` will be installed.
     homebrew_installed_packages:
       - ssh-copy-id
       - pv
+      -  { name: vim, install_options: "with-luajit,override-system-vi" }
 
 Packages you would like to make sure are installed via `brew install`.
 
