@@ -72,8 +72,8 @@
 # Brew.
 - name: Ensure configured homebrew packages are installed.
   homebrew:
-    name: "{{ item.name|default(item) }}"
-    install_options: "{{ item.install_options|default(omit) }}"
+    name: "{{ item.name | default(item) }}"
+    install_options: "{{ item.install_options | default(omit) }}"
     state: present
   with_items: "{{ homebrew_installed_packages }}"
 
