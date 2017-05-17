@@ -91,7 +91,15 @@
     name: "{{ item }}"
     state: present
     install_options: "appdir={{ homebrew_cask_appdir }}"
+  register: output
   with_items: "{{ homebrew_cask_apps }}"
+  ignore_errors: yes
+
+- name: Fail if any cask install returned not zero and wasn't already installed.
+  fail:
+    msg: "Failed to install {{ item.item }}: {{ item.msg }}"
+  when: "'failed' in item and item.failed and 'there is already an App' not in item.msg and 'already installed' not in item.msg"
+  with_items: "{{ output.results }}"
 
 - name: Check for Brewfile.
   stat:
