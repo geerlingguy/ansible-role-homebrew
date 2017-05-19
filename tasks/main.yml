@@ -26,7 +26,6 @@
     dest: "{{ homebrew_install_path }}"
     update: no
     accept_hostkey: yes
-    depth: 1
 
 # Adjust Homebrew permissions.
 - name: Ensure proper permissions and ownership on homebrew_brew_bin_path dirs.
