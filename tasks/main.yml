@@ -8,6 +8,7 @@
     state: directory
     mode: 0775
   become: yes
+  become_method: sudo
 
 - name: Ensure Homebrew directory exists.
   file:
@@ -17,6 +18,7 @@
     state: directory
     mode: 0775
   become: yes
+  become_method: sudo
 
 # Clone Homebrew.
 - name: Ensure Homebrew is installed.
@@ -37,6 +39,7 @@
     group: admin
     mode: 0775
   become: yes
+  become_method: sudo
 
 - name: Ensure proper ownership on homebrew_install_path subdirs.
   file:
@@ -46,6 +49,7 @@
     group: admin
     recurse: true
   become: yes
+  become_method: sudo
 
 # Place brew binary in proper location and complete setup.
 - name: Check if homebrew binary is already in place.
@@ -59,6 +63,7 @@
     state: link
   when: homebrew_binary.stat.exists == false
   become: yes
+  become_method: sudo
 
 - name: Force update brew after installation.
   command: "{{ homebrew_brew_bin_path }}/brew update --force"
