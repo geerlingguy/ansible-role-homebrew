@@ -22,5 +22,7 @@ homebrew_cask_apps:
 
 homebrew_cask_appdir: /Applications
 
+homebrew_services: []
+
 homebrew_use_brewfile: true
 homebrew_brewfile_dir: '~'

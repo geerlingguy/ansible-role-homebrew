@@ -62,6 +62,11 @@ Whether to install via a Brewfile. If so, you will need to install the `homebrew
 
 The directory where your Brewfile is located.
 
+    homebrew_services:
+     - mysql
+
+Homebrew services to start at login. Read more at https://github.com/Homebrew/homebrew-services.
+
 ## Dependencies
 
   - [elliotweiser.osx-command-line-tools](https://galaxy.ansible.com/elliotweiser/osx-command-line-tools/)

@@ -101,3 +101,9 @@
 - name: Install from Brewfile.
   command: "brew bundle chdir={{ homebrew_brewfile_dir }}"
   when: homebrew_brewfile.stat.exists and homebrew_use_brewfile
+
+- name: Ensure configured homebrew services are started at login.
+  command: "brew services start {{ item }}"
+  register: brew_service_result
+  changed_when: "'Successfully started' in brew_service_result.stdout"
+  with_items: "{{ homebrew_services }}"
