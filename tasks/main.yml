@@ -4,9 +4,7 @@
   file:
     path: "{{ homebrew_prefix }}"
     owner: root
-    group: admin
     state: directory
-    mode: 0775
   become: yes
 
 - name: Ensure Homebrew directory exists.
