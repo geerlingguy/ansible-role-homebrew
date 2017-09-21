@@ -13,6 +13,11 @@ None.
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
     homebrew_repo: https://github.com/Homebrew/brew
+    homebrew_high_sierra_prefix_owner: root
+    homebrew_non_high_sierra_prefix_owner: root
+    homebrew_non_high_sierra_prefix_group: admin
+    homebrew_install_path_group: admin
+    homebrew_bin_path_group: admin
 
 The GitHub repository for Homebrew core.
 

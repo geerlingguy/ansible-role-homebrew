@@ -4,7 +4,7 @@
 - name: Ensure Homebrew parent directory has correct permissions (on High Sierra).
   file:
     path: "{{ homebrew_prefix }}"
-    owner: root
+    owner: "{{ homebrew_high_sierra_prefix_owner }}"
     state: directory
   become: yes
   when: "ansible_distribution_version.startswith('10.13')"
@@ -12,8 +12,8 @@
 - name: Ensure Homebrew parent directory has correct permissions (on non-'High Sierra' versions of Mac OS X).
   file:
     path: "{{ homebrew_prefix }}"
-    owner: root
-    group: admin
+    owner: "{{ homebrew_non_high_sierra_prefix_owner }}"
+    group: "{{ homebrew_non_high_sierra_prefix_group }}"
     state: directory
     mode: 0775
   become: yes
@@ -23,7 +23,7 @@
   file:
     path: "{{ homebrew_install_path }}"
     owner: "{{ ansible_user_id }}"
-    group: admin
+    group: "{{ homebrew_install_path_group }}"
     state: directory
     mode: 0775
   become: yes
@@ -44,7 +44,7 @@
     path: "{{ homebrew_brew_bin_path }}"
     state: directory
     owner: "{{ ansible_user_id }}"
-    group: admin
+    group: "{{ homebrew_bin_path_group }}"
     mode: 0775
   become: yes
 
@@ -53,7 +53,7 @@
     path: "{{ homebrew_install_path }}"
     state: directory
     owner: "{{ ansible_user_id }}"
-    group: admin
+    group: "{{ homebrew_install_path_group }}"
     recurse: true
   become: yes
 
