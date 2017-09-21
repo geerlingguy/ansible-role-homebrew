@@ -5,6 +5,12 @@ homebrew_prefix: /usr/local
 homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
 homebrew_brew_bin_path: /usr/local/bin
 
+homebrew_high_sierra_prefix_owner: root
+homebrew_non_high_sierra_prefix_owner: root
+homebrew_non_high_sierra_prefix_group: admin
+homebrew_install_path_group: admin
+homebrew_bin_path_group: admin
+
 homebrew_installed_packages:
   - ssh-copy-id
   - pv
