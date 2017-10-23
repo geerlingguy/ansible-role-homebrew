@@ -1,8 +1,10 @@
 # Ansible Role: Homebrew
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-homebrew.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-homebrew)
+[![Build Status][travis-badge]][travis-link]
+[![MIT licensed][mit-badge]][mit-link]
+[![Galaxy Role][role-badge]][galaxy-link]
 
-Installs [Homebrew](http://brew.sh/) on macOS, and configures packages, taps, and cask apps according to supplied variables.
+Installs [Homebrew][homebrew] on MacOS, and configures packages, taps, and cask apps according to supplied variables.
 
 ## Requirements
 
@@ -10,7 +12,7 @@ None.
 
 ## Role Variables
 
-Available variables are listed below, along with default values (see `defaults/main.yml`):
+Available variables are listed below, along with default values (see [`defaults/main.yml`](defaults/main.yml)):
 
     homebrew_repo: https://github.com/Homebrew/brew
 
@@ -28,7 +30,7 @@ The path where `brew` will be installed.
     homebrew_installed_packages:
       - ssh-copy-id
       - pv
-      -  { name: vim, install_options: "with-luajit,override-system-vi" }
+      - { name: vim, install_options: "with-luajit,override-system-vi" }
 
 Packages you would like to make sure are installed via `brew install`. You can optionally add flags to the install by setting an `install_options` property, and if used, you need to explicitly set the `name` for the package as well.
 
@@ -48,7 +50,7 @@ Taps you would like to make sure Homebrew has tapped.
     homebrew_cask_apps:
       - firefox
 
-Apps you would like to have installed via `cask`. Search for popular apps on http://caskroom.io/ to see if they're available for install via Cask. Cask will not be used if it is not included in the list of taps in the `homebrew_taps` variable.
+Apps you would like to have installed via `cask`. [Search][caskroom] for popular apps to see if they're available for install via Cask. Cask will not be used if it is not included in the list of taps in the `homebrew_taps` variable.
 
     homebrew_cask_appdir: /Applications
 
@@ -64,7 +66,7 @@ The directory where your Brewfile is located.
 
 ## Dependencies
 
-  - [elliotweiser.osx-command-line-tools](https://galaxy.ansible.com/elliotweiser/osx-command-line-tools/)
+  - [elliotweiser.osx-command-line-tools][dep-osx-clt-role]
 
 ## Example Playbook
 
@@ -75,12 +77,33 @@ The directory where your Brewfile is located.
       roles:
         - geerlingguy.homebrew
 
-See the `tests/local-testing` directory for an example of running this role over Ansible's `local` connection. See also: [Mac Development Ansible Playbook](https://github.com/geerlingguy/mac-dev-playbook).
+See the `tests/local-testing` directory for an example of running this role over
+Ansible's `local` connection. See also:
+[Mac Development Ansible Playbook][mac-dev-playbook].
 
 ## License
 
-MIT / BSD
+[MIT][mit-link]
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling][author-website], author of
+[Ansible for DevOps][ansible-for-devops].
+
+#### Maintainer(s)
+
+- [Jeff Geerling](https://github.com/geerlingguy)
+- [Elliot Weiser](https://github.com/elliotweiser)
+
+[ansible-for-devops]: https://www.ansiblefordevops.com/
+[author-website]: https://www.jeffgeerling.com/
+[caskroom]: https://caskroom.github.io/search
+[galaxy-link]: https://galaxy.ansible.com/geerlingguy/homebrew/
+[homebrew]: http://brew.sh/
+[mac-dev-playbook]: https://github.com/geerlingguy/mac-dev-playbook
+[mit-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[mit-link]: https://raw.githubusercontent.com/geerlingguy/ansible-role-homebrew/master/LICENSE
+[dep-osx-clt-role]: https://galaxy.ansible.com/elliotweiser/osx-command-line-tools/
+[role-badge]: https://img.shields.io/ansible/role/1858.svg
+[travis-badge]: https://travis-ci.org/geerlingguy/ansible-role-homebrew.svg?branch=master
+[travis-link]: https://travis-ci.org/geerlingguy/ansible-role-homebrew
