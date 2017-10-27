@@ -46,7 +46,8 @@ before_install:
   - deactivate
 
   # Uninstall existing brew installation.
-  - curl -sLO https://raw.githubusercontent.com/Homebrew/install/master/uninstall
+  - URL=https://raw.githubusercontent.com/Homebrew/install/master/uninstall
+  - curl -sLO "${URL}"
   - chmod +x ./uninstall
   - ./uninstall --force
   - sudo rm -rf /usr/local/Homebrew
@@ -61,12 +62,16 @@ install:
   - sudo -H pip install ansible
 
   # Add ansible.cfg to pick up roles path.
-  - "{ echo '[defaults]'; echo 'roles_path = ../:../roles:./roles'; } >> ansible.cfg"
+  - >-
+    { echo '[defaults]'; echo 'roles_path = ../:../roles:./roles'; }
+    >> ansible.cfg
 
   # Add a hosts file.
   - sudo mkdir -p /etc/ansible
   - sudo touch /etc/ansible/hosts
-  - "echo -e '[local]\nlocalhost ansible_connection=local' | sudo tee -a /etc/ansible/hosts > /dev/null"
+  - >-
+    echo -e '[local]\nlocalhost ansible_connection=local' |
+    sudo tee -a /etc/ansible/hosts > /dev/null
 
 script:
   # Check the role/playbook's syntax.

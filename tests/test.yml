@@ -1,6 +1,6 @@
 ---
-- hosts: localhost
-
+- name: Converge
+  hosts: all
   roles:
     - elliotweiser.osx-command-line-tools
     - ansible-role-homebrew
