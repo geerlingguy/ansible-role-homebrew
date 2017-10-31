@@ -1,12 +1,15 @@
 ---
 # Homebrew setup prerequisites.
-- name: Get current account's username.
-  command: whoami
-  register: homebrew_whoami
-  changed_when: false
-  always_run: true
 
-- name: Ensure Homebrew parent directory has correct permissions.
+- name: Ensure Homebrew parent directory has correct permissions (on High Sierra).
+  file:
+    path: "{{ homebrew_prefix }}"
+    owner: root
+    state: directory
+  become: yes
+  when: "ansible_distribution_version.startswith('10.13')"
+
+- name: Ensure Homebrew parent directory has correct permissions (on non-'High Sierra' versions of Mac OS X).
   file:
     path: "{{ homebrew_prefix }}"
     owner: root
@@ -14,11 +17,12 @@
     state: directory
     mode: 0775
   become: yes
+  when: "not ansible_distribution_version.startswith('10.13')"
 
 - name: Ensure Homebrew directory exists.
   file:
     path: "{{ homebrew_install_path }}"
-    owner: "{{ homebrew_whoami.stdout }}"
+    owner: "{{ ansible_user_id }}"
     group: admin
     state: directory
     mode: 0775
@@ -39,7 +43,7 @@
   file:
     path: "{{ homebrew_brew_bin_path }}"
     state: directory
-    owner: "{{ homebrew_whoami.stdout }}"
+    owner: "{{ ansible_user_id }}"
     group: admin
     mode: 0775
   become: yes
@@ -48,7 +52,7 @@
   file:
     path: "{{ homebrew_install_path }}"
     state: directory
-    owner: "{{ homebrew_whoami.stdout }}"
+    owner: "{{ ansible_user_id }}"
     group: admin
     recurse: true
   become: yes
@@ -76,24 +80,24 @@
   with_items: "{{ homebrew_taps }}"
 
 # Cask.
-- name: Get list of apps installed with cask.
-  command: >
-    bash -l -c '{{ homebrew_brew_bin_path }}/brew cask list'
-  register: homebrew_cask_list
-  always_run: yes
-  changed_when: false
-
-# Use command module instead of homebrew_cask so appdir can be used.
 - name: Install configured cask applications.
-  command: >
-    bash -l -c '{{ homebrew_brew_bin_path }}/brew cask install {{ item }} --appdir={{ homebrew_cask_appdir }}'
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+    install_options: "appdir={{ homebrew_cask_appdir }}"
   with_items: "{{ homebrew_cask_apps }}"
-  when: "'{{ item }}' not in homebrew_cask_list.stdout"
 
 # Brew.
 - name: Ensure configured homebrew packages are installed.
-  homebrew: "name={{ item }} state=present"
+  homebrew:
+    name: "{{ item.name | default(item) }}"
+    install_options: "{{ item.install_options | default(omit) }}"
+    state: present
   with_items: "{{ homebrew_installed_packages }}"
+
+- name: Ensure blacklisted homebrew packages are not installed.
+  homebrew: "name={{ item }} state=absent"
+  with_items: "{{ homebrew_uninstalled_packages }}"
 
 - name: Upgrade all homebrew packages (if configured).
   homebrew: update_homebrew=yes upgrade_all=yes
