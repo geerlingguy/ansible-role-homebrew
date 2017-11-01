@@ -79,6 +79,14 @@
   homebrew_tap: "tap={{ item }} state=present"
   with_items: "{{ homebrew_taps }}"
 
+# Cask.
+- name: Install configured cask applications.
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+    install_options: "appdir={{ homebrew_cask_appdir }}"
+  with_items: "{{ homebrew_cask_apps }}"
+
 # Brew.
 - name: Ensure configured homebrew packages are installed.
   homebrew:
@@ -94,14 +102,6 @@
 - name: Upgrade all homebrew packages (if configured).
   homebrew: update_homebrew=yes upgrade_all=yes
   when: homebrew_upgrade_all_packages
-
-# Cask.
-- name: Install configured cask applications.
-  homebrew_cask:
-    name: "{{ item }}"
-    state: present
-    install_options: "appdir={{ homebrew_cask_appdir }}"
-  with_items: "{{ homebrew_cask_apps }}"
 
 - name: Check for Brewfile.
   stat:
