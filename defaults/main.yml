@@ -2,8 +2,14 @@
 homebrew_repo: https://github.com/Homebrew/brew
 
 homebrew_prefix: /usr/local
+homebrew_prefix_owner: root
+homebrew_prefix_group: admin
 homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
+homebrew_install_path_owner: "{{ ansible_user_id }}"
+homebrew_install_path_group: admin
 homebrew_brew_bin_path: /usr/local/bin
+homebrew_brew_bin_path_owner: "{{ ansible_user_id }}"
+homebrew_brew_bin_path_group: admin
 
 homebrew_installed_packages:
   - ssh-copy-id
