@@ -20,6 +20,8 @@ homebrew_taps:
 homebrew_cask_apps:
   - firefox
 
+homebrew_cask_uninstalled_apps: []
+
 homebrew_cask_appdir: /Applications
 
 homebrew_use_brewfile: true
