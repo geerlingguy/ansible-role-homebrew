@@ -47,6 +47,7 @@
     group: admin
     mode: 0775
   with_items: "{{ homebrew_required_directories }}"
+  when: "{{ item }}.find('zsh') = -1"
   become: yes
 
 - name: Lock down zsh directory
