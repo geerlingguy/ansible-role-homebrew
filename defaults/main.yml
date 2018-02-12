@@ -4,7 +4,7 @@ homebrew_repo: https://github.com/Homebrew/brew
 homebrew_prefix: /usr/local
 homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
 homebrew_brew_bin_path: /usr/local/bin
-homebrew_required_directories:
+homebrew_required_directories_0775:
   - "{{ homebrew_prefix }}/Cellar"
   - "{{ homebrew_prefix }}/Caskroom"
   - "{{ homebrew_prefix }}/Frameworks"
@@ -15,9 +15,11 @@ homebrew_required_directories:
   - "{{ homebrew_prefix }}/opt"
   - "{{ homebrew_prefix }}/sbin"
   - "{{ homebrew_prefix }}/share"
-  - "{{ homebrew_prefix }}/share/zsh"
-  - "{{ homebrew_prefix }}/share/zsh/site-functions"
   - "{{ homebrew_prefix }}/var"
+
+homebrew_required_directories_0755:
+  - "{{ homebrew_prefix}}/share/zsh"
+  - "{{ homebrew_prefix}}/share/zsh/site-functions"
 
 homebrew_installed_packages:
   - ssh-copy-id

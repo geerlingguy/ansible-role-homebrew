@@ -38,24 +38,25 @@
     accept_hostkey: yes
     depth: 1
 
-# Create and set permissions on all directories used by Homeebrew
-- name: Ensure all Homebrew directories exist
+# Create and set permissions on all directories used by Homebrew
+- name: Create directories that require 0775 permissions 
   file:
     path: "{{ item }}"
     state: directory
     owner: "{{ ansible_user_id }}"
     group: admin
     mode: 0775
-  with_items: "{{ homebrew_required_directories }}"
-  when: "{{ item }}.find('zsh') = -1"
+  with_items: "{{ homebrew_required_directories_0775 }}"
   become: yes
 
-- name: Lock down zsh directory
+- name: Create directories that require 0755 permissions 
   file:
-    path: "{{ homebrew_prefix }}/share/zsh"
+    path: "{{ item }}"
     state: directory
+    owner: "{{ ansible_user_id }}"
+    group: admin
     mode: 0755
-    recurse: true
+  with_items: "{{ homebrew_required_directories_0755 }}"
   become: yes
 
 # Place brew binary in proper location and complete setup.
