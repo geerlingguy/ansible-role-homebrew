@@ -70,6 +70,30 @@
   when: homebrew_binary.stat.exists == false
   become: yes
 
+- name: Ensure proper homebrew folders are in place
+  file:
+    path: "{{ homebrew_prefix }}/{{ item }}"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: admin
+    recurse: true
+  become: yes
+  with_items:
+    - Cellar
+    - Homebrew
+    - Frameworks
+    - Caskroom
+    - bin
+    - etc
+    - include
+    - lib
+    - opt
+    - sbin
+    - share
+    - share/zsh
+    - share/zsh/site-functions
+    - var
+
 - name: Force update brew after installation.
   command: "{{ homebrew_brew_bin_path }}/brew update --force"
   when: homebrew_binary.stat.exists == false
