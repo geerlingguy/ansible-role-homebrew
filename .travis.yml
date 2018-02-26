@@ -1,24 +1,64 @@
 ---
 sudo: required
 language: objective-c
-# 10.11 (see https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version)
-osx_image: xcode7.3
+
+# Reference for OS X Versions:
+# https://docs.travis-ci.com/user/reference/osx/#OS-X-Version
+matrix:
+  include:
+    # High Sierra (10.13)
+    - os: osx
+      osx_image: xcode9.3beta
+    # Sierra (10.12)
+    - os: osx
+      osx_image: xcode9.2
+    # El Capitan (10.11)
+    - os: osx
+      osx_image: xcode8
+    # Yosemite (10.10)
+    - os: osx
+      osx_image: xcode6.4
 
 before_install:
+  # Consistent Ruby version for dealing w/ initial Homebrew installation.
+  - rvm install ruby-2.4.2
+  - rvm use ruby-2.4.2
+
+  # Keep Python and OpenSSL libraries up-to-date
+  - brew upgrade openssl || brew install openssl || true
+  - brew upgrade python || brew install python || true
+
+  # Use a virtualenv for sane(r) dependency management
+  - sudo -H pip install -U virtualenv
+  - virtualenv --python=/usr/local/bin/python2.7 .venv
+  - source .venv/bin/activate
+
+  # Not sure if necessary but covering bases
+  - pip install ansible pyOpenSSL
+
+  # Show Python's detected SSL version
+  - python -c "import ssl; print(ssl.OPENSSL_VERSION)"
+
+  # Install dependency roles (system Python uses old SSL library)
+  - ansible-galaxy install -r requirements.yml -p ./roles
+
+  # Leaving the virtualenv, since switching to system Python
+  - deactivate
+
   # Uninstall existing brew installation.
   - curl -sLO https://raw.githubusercontent.com/Homebrew/install/master/uninstall
   - chmod +x ./uninstall
   - ./uninstall --force
-  - rm -rf /usr/local/Homebrew
-  - rm -rf /usr/local/Caskroom
-  - rm -rf /usr/local/bin/brew
+  - sudo rm -rf /usr/local/Homebrew
+  - sudo rm -rf /usr/local/Caskroom
+  - sudo rm -rf /usr/local/bin/brew
 
 install:
   # Install pip.
   - sudo easy_install pip
 
   # Install Ansible.
-  - sudo pip install ansible
+  - sudo -H pip install ansible
 
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../:../roles:./roles'; } >> ansible.cfg"
@@ -28,9 +68,6 @@ install:
   - sudo touch /etc/ansible/hosts
   - "echo -e '[local]\nlocalhost ansible_connection=local' | sudo tee -a /etc/ansible/hosts > /dev/null"
 
-  # Install dependency roles.
-  - ansible-galaxy install -r requirements.yml -p ./roles
-
 script:
   # Check the role/playbook's syntax.
   - "ansible-playbook tests/test.yml --syntax-check"
@@ -39,7 +76,7 @@ script:
   - "ansible-playbook tests/test.yml"
 
   # Test the playbook's idempotence.
-  - idempotence=$(mktemp)
+  - idempotence=$(mktemp /tmp/ansible-role-homebrew.XXXXXX)
   - "ansible-playbook tests/test.yml | tee -a ${idempotence}"
   - >
     tail ${idempotence}
