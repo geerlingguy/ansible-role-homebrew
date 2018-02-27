@@ -111,6 +111,10 @@
     install_options: "appdir={{ homebrew_cask_appdir }}"
   with_items: "{{ homebrew_cask_apps }}"
 
+- name: Ensure blacklisted cask applications are not installed.
+  homebrew_cask: "name={{ item }} state=absent"
+  with_items: "{{ homebrew_cask_uninstalled_apps }}"
+
 # Brew.
 - name: Ensure configured homebrew packages are installed.
   homebrew:

@@ -52,6 +52,11 @@ Taps you would like to make sure Homebrew has tapped.
 
 Apps you would like to have installed via `cask`. [Search][caskroom] for popular apps to see if they're available for install via Cask. Cask will not be used if it is not included in the list of taps in the `homebrew_taps` variable.
 
+    homebrew_cask_uninstalled_apps:
+      - google-chrome
+
+Apps you would like to make sure are _uninstalled_.
+
     homebrew_cask_appdir: /Applications
 
 Directory where applications installed via `cask` should be installed.
