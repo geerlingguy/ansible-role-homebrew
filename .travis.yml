@@ -26,7 +26,7 @@ before_install:
 
   # Keep Python and OpenSSL libraries up-to-date
   - brew upgrade openssl || brew install openssl || true
-  - brew upgrade python || brew install python || true
+  - brew upgrade python2 || brew install python2 || true
 
   # Use a virtualenv for sane(r) dependency management
   - sudo -H pip install -U virtualenv
