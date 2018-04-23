@@ -52,8 +52,9 @@ install:
   - sudo touch /etc/ansible/hosts
   - "echo -e '[local]\nlocalhost ansible_connection=local' | sudo tee -a /etc/ansible/hosts > /dev/null"
 
-  # Install role dependencies.
-  - ansible-galaxy install -r requirements.yml -p ./roles
+  # Install role dependencies (ignore certs so it works out of the box on older
+  # macOS versions with older OpenSSL versions).
+  - ansible-galaxy install -r requirements.yml -p ./roles --ignore-certs
 
 script:
   # Check the role/playbook's syntax.
