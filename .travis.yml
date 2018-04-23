@@ -8,7 +8,7 @@ matrix:
   include:
     # High Sierra (10.13)
     - os: osx
-      osx_image: xcode9.3beta
+      osx_image: xcode9.3
     # Sierra (10.12)
     - os: osx
       osx_image: xcode9.2
