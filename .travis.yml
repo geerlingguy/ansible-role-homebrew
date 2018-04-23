@@ -54,8 +54,10 @@ before_install:
   - sudo rm -rf /usr/local/bin/brew
 
 install:
-  # Install pip.
-  - sudo easy_install pip
+  # Install pip via get-pip.py script since system pip/Python can break under
+  # older versions of macOS. See: https://stackoverflow.com/a/49748494/100134
+  - curl https://bootstrap.pypa.io/get-pip.py | python
+  - pip install --upgrade setuptools
 
   # Install Ansible.
   - sudo -H pip install ansible
