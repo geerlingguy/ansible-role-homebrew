@@ -68,13 +68,12 @@
   when: homebrew_binary.stat.exists == false
   become: yes
 
-- name: Ensure proper homebrew folders are in place
+- name: Ensure proper homebrew folders are in place.
   file:
     path: "{{ homebrew_prefix }}/{{ item }}"
     state: directory
     owner: "{{ ansible_user_id }}"
     group: admin
-    recurse: true
   become: yes
   with_items:
     - Cellar
