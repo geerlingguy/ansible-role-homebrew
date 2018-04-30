@@ -70,7 +70,7 @@ script:
   - "ansible-playbook tests/test.yml"
 
   # Test the playbook's idempotence.
-  - idempotence=$(mktemp /tmp/ansible-role-homebrew.XXXXXX)
+  - idempotence=$(mktemp)
   - "ansible-playbook tests/test.yml | tee -a ${idempotence}"
   - >
     tail ${idempotence}
