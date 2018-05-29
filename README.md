@@ -43,7 +43,7 @@ Packages you would like to make sure are _uninstalled_.
 Whether to upgrade homebrew and all packages installed by homebrew. If you prefer to manually update packages via `brew` commands, leave this set to `no`.
 
     homebrew_taps:
-      - caskroom/cask
+      - homebrew/cask
 
 Taps you would like to make sure Homebrew has tapped.
 
