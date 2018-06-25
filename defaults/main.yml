@@ -5,9 +5,7 @@ homebrew_prefix: /usr/local
 homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
 homebrew_brew_bin_path: /usr/local/bin
 
-homebrew_installed_packages:
-  - ssh-copy-id
-  - pv
+homebrew_installed_packages: []
 
 homebrew_uninstalled_packages: []
 
@@ -17,8 +15,7 @@ homebrew_taps:
   - homebrew/core
   - homebrew/cask
 
-homebrew_cask_apps:
-  - firefox
+homebrew_cask_apps: []
 
 homebrew_cask_uninstalled_apps: []
 
