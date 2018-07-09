@@ -71,7 +71,7 @@ The directory where your Brewfile is located.
 
 ## Dependencies
 
-  - [elliotweiser.osx_command_line_tools][dep-osx-clt-role]
+  - [elliotweiser.osx-command-line-tools][dep-osx-clt-role]
 
 ## Example Playbook
 
