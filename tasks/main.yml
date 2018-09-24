@@ -110,7 +110,7 @@
     name: "{{ item }}"
     state: present
     install_options: "appdir={{ homebrew_cask_appdir }}"
-    accept_external_apps: {{ homebrew_cask_accept_external_apps }}
+    accept_external_apps: "{{ homebrew_cask_accept_external_apps }}"
   with_items: "{{ homebrew_cask_apps }}"
   notify:
     - Clear homebrew cache
