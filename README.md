@@ -53,6 +53,12 @@ Taps you would like to make sure Homebrew has tapped.
 
 Apps you would like to have installed via `cask`. [Search][caskroom] for popular apps to see if they're available for install via Cask. Cask will not be used if it is not included in the list of taps in the `homebrew_taps` variable. By default, no Cask apps will be installed (`homebrew_cask_apps: []`).
 
+    homebrew_cask_accept_external_apps: true
+
+Default value is `false` and would result in interruption of further processing of the whole role (and ansible play) in case any app given in `homebrew_cask_apps` is already installed without `cask`. Good for a tightly managed system.
+
+Specify as `true` instead if you prefer to silently continue if any App is already installed without `cask`. Generally good for a system that is managed with `cask` / `Ansible` as well as other install methods (like manually) at the same time.
+
     homebrew_cask_uninstalled_apps:
       - google-chrome
 
