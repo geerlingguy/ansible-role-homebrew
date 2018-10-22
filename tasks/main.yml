@@ -58,6 +58,7 @@
 - name: Check if homebrew binary is already in place.
   stat: "path={{ homebrew_brew_bin_path }}/brew"
   register: homebrew_binary
+  check_mode: no
 
 - name: Symlink brew to homebrew_brew_bin_path.
   file:
@@ -98,6 +99,7 @@
   command: "{{ homebrew_brew_bin_path }}/brew --cache"
   register: homebrew_cache_path
   changed_when: false
+  check_mode: no
 
 # Tap.
 - name: Ensure configured taps are tapped.
@@ -110,6 +112,7 @@
     name: "{{ item }}"
     state: present
     install_options: "appdir={{ homebrew_cask_appdir }}"
+    accept_external_apps: "{{ homebrew_cask_accept_external_apps }}"
   with_items: "{{ homebrew_cask_apps }}"
   notify:
     - Clear homebrew cache
@@ -142,6 +145,7 @@
   stat:
     path: "{{ homebrew_brewfile_dir }}/Brewfile"
   register: homebrew_brewfile
+  check_mode: no
 
 - name: Install from Brewfile.
   command: "brew bundle chdir={{ homebrew_brewfile_dir }}"
