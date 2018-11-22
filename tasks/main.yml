@@ -82,7 +82,7 @@
     owner: "{{ homebrew_user }}"
     group: "{{ homebrew_group }}"
   become: yes
-  with_items:
+  loop:
     - Cellar
     - Homebrew
     - Frameworks
@@ -112,7 +112,7 @@
   # Tap.
   - name: Ensure configured taps are tapped.
     homebrew_tap: "tap={{ item }} state=present"
-    with_items: "{{ homebrew_taps }}"
+    loop: "{{ homebrew_taps }}"
 
   # Cask.
   - name: Install configured cask applications.
@@ -121,13 +121,13 @@
       state: present
       install_options: "appdir={{ homebrew_cask_appdir }}"
       accept_external_apps: "{{ homebrew_cask_accept_external_apps }}"
-    with_items: "{{ homebrew_cask_apps }}"
+    loop: "{{ homebrew_cask_apps }}"
     notify:
       - Clear homebrew cache
 
   - name: Ensure blacklisted cask applications are not installed.
     homebrew_cask: "name={{ item }} state=absent"
-    with_items: "{{ homebrew_cask_uninstalled_apps }}"
+    loop: "{{ homebrew_cask_uninstalled_apps }}"
 
   # Brew.
   - name: Ensure configured homebrew packages are installed.
@@ -135,13 +135,13 @@
       name: "{{ item.name | default(item) }}"
       install_options: "{{ item.install_options | default(omit) }}"
       state: present
-    with_items: "{{ homebrew_installed_packages }}"
+    loop: "{{ homebrew_installed_packages }}"
     notify:
       - Clear homebrew cache
 
   - name: Ensure blacklisted homebrew packages are not installed.
     homebrew: "name={{ item }} state=absent"
-    with_items: "{{ homebrew_uninstalled_packages }}"
+    loop: "{{ homebrew_uninstalled_packages }}"
 
   - name: Upgrade all homebrew packages (if configured).
     homebrew: update_homebrew=yes upgrade_all=yes
