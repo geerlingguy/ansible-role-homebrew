@@ -1,4 +1,9 @@
 ---
+- name: Determine Homebrew ownership variables
+  set_fact:
+    homebrew_user: '{{ homebrew_user | default(ansible_user_id) }}'
+    homebrew_group: '{{ homebrew_group | default(ansible_user_gid) }}'
+
 # Homebrew setup prerequisites.
 - name: Ensure Homebrew parent directory has correct permissions (MacOS >= 10.13).
   file:
@@ -21,8 +26,8 @@
 - name: Ensure Homebrew directory exists.
   file:
     path: "{{ homebrew_install_path }}"
-    owner: "{{ ansible_user_id }}"
-    group: admin
+    owner: "{{ homebrew_user }}"
+    group: "{{ homebrew_group }}"
     state: directory
     mode: 0775
   become: yes
@@ -41,8 +46,8 @@
   file:
     path: "{{ homebrew_brew_bin_path }}"
     state: directory
-    owner: "{{ ansible_user_id }}"
-    group: admin
+    owner: "{{ homebrew_user }}"
+    group: "{{ homebrew_group }}"
     mode: 0775
   become: yes
 
@@ -50,8 +55,8 @@
   file:
     path: "{{ homebrew_install_path }}"
     state: directory
-    owner: "{{ ansible_user_id }}"
-    group: admin
+    owner: "{{ homebrew_user }}"
+    group: "{{ homebrew_group }}"
   become: yes
 
 # Place brew binary in proper location and complete setup.
@@ -72,8 +77,8 @@
   file:
     path: "{{ homebrew_prefix }}/{{ item }}"
     state: directory
-    owner: "{{ ansible_user_id }}"
-    group: admin
+    owner: "{{ homebrew_user }}"
+    group: "{{ homebrew_group }}"
   become: yes
   with_items:
     - Cellar
