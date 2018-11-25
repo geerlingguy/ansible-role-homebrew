@@ -78,7 +78,7 @@ Set to `true` to remove the Hombrew cache after any new software is installed.
 
 The user that you would like to install Homebrew as.
 
-    homebrew_group: "{{ ansible_group_id }}"
+    homebrew_group: "{{ ansible_user_gid }}"
 
 The group that you would like to use while installing Homebrew.
 
