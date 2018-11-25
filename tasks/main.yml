@@ -40,6 +40,8 @@
     dest: "{{ homebrew_install_path }}"
     update: no
     depth: 1
+  become: yes
+  become_user: "{{ homebrew_user }}"
 
 # Adjust Homebrew permissions.
 - name: Ensure proper permissions and ownership on homebrew_brew_bin_path dirs.
@@ -125,10 +127,14 @@
   with_items: "{{ homebrew_cask_apps }}"
   notify:
     - Clear homebrew cache
+  become: yes
+  become_user: "{{ homebrew_user }}"
 
 - name: Ensure blacklisted cask applications are not installed.
   homebrew_cask: "name={{ item }} state=absent"
   with_items: "{{ homebrew_cask_uninstalled_apps }}"
+  become: yes
+  become_user: "{{ homebrew_user }}"
 
 # Brew.
 - name: Ensure configured homebrew packages are installed.
