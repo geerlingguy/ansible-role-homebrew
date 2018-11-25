@@ -112,6 +112,8 @@
 - name: Ensure configured taps are tapped.
   homebrew_tap: "tap={{ item }} state=present"
   with_items: "{{ homebrew_taps }}"
+  become: yes
+  become_user: "{{ homebrew_user }}"
 
 # Cask.
 - name: Install configured cask applications.
@@ -137,16 +139,22 @@
   with_items: "{{ homebrew_installed_packages }}"
   notify:
     - Clear homebrew cache
+  become: yes
+  become_user: "{{ homebrew_user }}"
 
 - name: Ensure blacklisted homebrew packages are not installed.
   homebrew: "name={{ item }} state=absent"
   with_items: "{{ homebrew_uninstalled_packages }}"
+  become: yes
+  become_user: "{{ homebrew_user }}"
 
 - name: Upgrade all homebrew packages (if configured).
   homebrew: update_homebrew=yes upgrade_all=yes
   when: homebrew_upgrade_all_packages
   notify:
     - Clear homebrew cache
+  become: yes
+  become_user: "{{ homebrew_user }}"
 
 - name: Check for Brewfile.
   stat:
@@ -157,3 +165,5 @@
 - name: Install from Brewfile.
   command: "brew bundle chdir={{ homebrew_brewfile_dir }}"
   when: homebrew_brewfile.stat.exists and homebrew_use_brewfile
+  become: yes
+  become_user: "{{ homebrew_user }}"
