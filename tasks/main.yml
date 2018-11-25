@@ -99,6 +99,8 @@
 - name: Force update brew after installation.
   command: "{{ homebrew_brew_bin_path }}/brew update --force"
   when: not homebrew_binary.stat.exists
+  become: yes
+  become_user: "{{ homebrew_user }}"
 
 - name: Where is the cache?
   command: "{{ homebrew_brew_bin_path }}/brew --cache"
