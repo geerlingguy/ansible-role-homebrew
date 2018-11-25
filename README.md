@@ -74,6 +74,14 @@ The directory where your Brewfile is located.
 
 Set to `true` to remove the Hombrew cache after any new software is installed.
 
+    homebrew_user: "{{ ansible_user_id }}"
+
+The user that you would like to install Homebrew as.
+
+    homebrew_group: "{{ ansible_group_id }}"
+
+The group that you would like to use while installing Homebrew.
+
 ## Dependencies
 
   - [elliotweiser.osx-command-line-tools][dep-osx-clt-role]
