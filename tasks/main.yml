@@ -115,6 +115,10 @@
     loop: "{{ homebrew_taps }}"
 
   # Cask.
+  - name: Ensure blacklisted cask applications are not installed.
+    homebrew_cask: "name={{ item }} state=absent"
+    loop: "{{ homebrew_cask_uninstalled_apps }}"
+
   - name: Install configured cask applications.
     homebrew_cask:
       name: "{{ item }}"
@@ -125,11 +129,11 @@
     notify:
       - Clear homebrew cache
 
-  - name: Ensure blacklisted cask applications are not installed.
-    homebrew_cask: "name={{ item }} state=absent"
-    loop: "{{ homebrew_cask_uninstalled_apps }}"
-
   # Brew.
+  - name: Ensure blacklisted homebrew packages are not installed.
+    homebrew: "name={{ item }} state=absent"
+    loop: "{{ homebrew_uninstalled_packages }}"
+
   - name: Ensure configured homebrew packages are installed.
     homebrew:
       name: "{{ item.name | default(item) }}"
@@ -138,10 +142,6 @@
     loop: "{{ homebrew_installed_packages }}"
     notify:
       - Clear homebrew cache
-
-  - name: Ensure blacklisted homebrew packages are not installed.
-    homebrew: "name={{ item }} state=absent"
-    loop: "{{ homebrew_uninstalled_packages }}"
 
   - name: Upgrade all homebrew packages (if configured).
     homebrew: update_homebrew=yes upgrade_all=yes
