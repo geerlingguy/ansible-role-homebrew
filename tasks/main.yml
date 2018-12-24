@@ -121,9 +121,9 @@
 
   - name: Install configured cask applications.
     homebrew_cask:
-      name: "{{ item }}"
+      name: "{{ item.name | default(item) }}"
       state: present
-      install_options: "appdir={{ homebrew_cask_appdir }}"
+      install_options: "{{ item.install_options | default('appdir=' + homebrew_cask_appdir) }}"
       accept_external_apps: "{{ homebrew_cask_accept_external_apps }}"
     loop: "{{ homebrew_cask_apps }}"
     notify:
