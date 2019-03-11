@@ -3,9 +3,13 @@
   vars:
     homebrew_clear_cache: true
     homebrew_installed_packages:
-      - ssh-copy-id
+      - ssh-copy-id  # from homebrew/core
+      - nginx-full  # from dengi/nginx
     homebrew_cask_apps:
-      - firefox
+      - firefox  # from hombrew/cask
+    homebrew_taps:
+      - homebrew/cask
+      - { name: denji/nginx, url: 'https://github.com/denji/homebrew-nginx.git' }
   roles:
     - elliotweiser.osx-command-line-tools
     - ansible-role-homebrew
