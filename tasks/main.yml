@@ -30,6 +30,7 @@
     group: "{{ homebrew_group }}"
     state: directory
     mode: 0775
+    recurse: yes
   become: yes
 
 # Clone Homebrew.
@@ -81,6 +82,7 @@
     state: directory
     owner: "{{ homebrew_user }}"
     group: "{{ homebrew_group }}"
+    recurse: yes
   become: yes
   loop:
     - Cellar
