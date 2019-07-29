@@ -3,18 +3,18 @@ sudo: required
 language: objective-c
 
 # Reference for OS X Versions:
-# https://docs.travis-ci.com/user/reference/osx/#OS-X-Version
+# https://docs.travis-ci.com/user/reference/osx/#macos-version
 matrix:
   include:
+    # Mojave (10.14)
+    - os: osx
+      osx_image: xcode11
     # High Sierra (10.13)
     - os: osx
-      osx_image: xcode9.3
+      osx_image: xcode10.1
     # Sierra (10.12)
     - os: osx
       osx_image: xcode9.2
-    # El Capitan (10.11)
-    - os: osx
-      osx_image: xcode8
 
 before_install:
   # Install role dependencies. Do this here, using newer OpenSSL version and a
