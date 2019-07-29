@@ -13,7 +13,6 @@ homebrew_upgrade_all_packages: no
 
 homebrew_taps:
   - homebrew/core
-  - homebrew/cask
 
 homebrew_cask_apps: []
 

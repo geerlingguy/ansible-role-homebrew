@@ -44,7 +44,7 @@ Packages you would like to make sure are _uninstalled_.
 Whether to upgrade homebrew and all packages installed by homebrew. If you prefer to manually update packages via `brew` commands, leave this set to `no`.
 
     homebrew_taps:
-      - homebrew/cask
+      - homebrew/core
       - { name: my_company/internal_tap, url: 'https://example.com/path/to/tap.git' }
 
 Taps you would like to make sure Homebrew has tapped.
