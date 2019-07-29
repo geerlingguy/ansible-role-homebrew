@@ -8,7 +8,7 @@
     homebrew_cask_apps:
       - firefox  # from hombrew/cask
     homebrew_taps:
-      - homebrew/cask
+      - homebrew/core
       - { name: denji/nginx, url: 'https://github.com/denji/homebrew-nginx.git' }
   roles:
     - elliotweiser.osx-command-line-tools
