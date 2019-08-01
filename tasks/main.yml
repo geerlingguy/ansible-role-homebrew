@@ -109,6 +109,16 @@
     changed_when: false
     check_mode: no
 
+  - name: generate brew packages list
+    shell: "{{ homebrew_brew_bin_path }}/brew list"
+    register: brew_installed_packages
+    changed_when: false
+
+  - name: generate brew cask packages list
+    shell: "{{ homebrew_brew_bin_path }}/brew cask list"
+    register: brew_cask_installed_packages
+    changed_when: false
+
   # Tap.
   - name: Ensure configured taps are tapped.
     homebrew_tap:
@@ -129,6 +139,7 @@
       install_options: "{{ item.install_options | default('appdir=' + homebrew_cask_appdir) }}"
       accept_external_apps: "{{ homebrew_cask_accept_external_apps }}"
     loop: "{{ homebrew_cask_apps }}"
+    when: item not in brew_cask_installed_packages.stdout.split()
     notify:
       - Clear homebrew cache
 
@@ -143,6 +154,7 @@
       install_options: "{{ item.install_options | default(omit) }}"
       state: present
     loop: "{{ homebrew_installed_packages }}"
+    when: item not in brew_installed_packages.stdout.split()
     notify:
       - Clear homebrew cache
 
