@@ -82,7 +82,7 @@
     owner: "{{ homebrew_user }}"
     group: "{{ homebrew_group }}"
   become: yes
-  loop: "{{ homebrew_folders }}"
+  loop: "{{ homebrew_folders_base + homebrew_folders_additional }}"
 
 - block:
   - name: Force update brew after installation.
