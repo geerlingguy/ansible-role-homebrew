@@ -90,6 +90,10 @@ The user that you would like to install Homebrew as.
 
 The group that you would like to use while installing Homebrew.
 
+    homebrew_folders_additional: []
+
+Any additional folders inside `homebrew_prefix` for which to ensure homebrew user/group ownership.
+
 ## Dependencies
 
   - [elliotweiser.osx-command-line-tools][dep-osx-clt-role]
