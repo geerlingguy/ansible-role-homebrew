@@ -40,8 +40,10 @@ before_install:
 
   # Unset git protocol.version to resolve issue with xcode10.1 (10.13) build.
   - |
-    if [[ "$osx_image" == xcode10.1 ]]; then
+    if [[ "$osx_image" == "xcode10.1" ]]; then
+      echo "Unsetting git config protocol.version"
       git config --global --unset protocol.version
+      git config --list --show-origin
     fi
 
 install:
