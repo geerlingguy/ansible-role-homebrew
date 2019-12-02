@@ -38,6 +38,12 @@ before_install:
   - sudo rm -rf /usr/local/Caskroom
   - sudo rm -rf /usr/local/bin/brew
 
+  # Unset git protocol.version to resolve issue with xcode10.1 (10.13) build.
+  - |
+    if [[ "$osx_image" == xcode10.1 ]]; then
+      git config --global --unset protocol.version
+    fi
+
 install:
   # Get macOS version string.
   - macos_version=$(sw_vers -productVersion)
