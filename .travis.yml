@@ -38,15 +38,6 @@ before_install:
   - sudo rm -rf /usr/local/Caskroom
   - sudo rm -rf /usr/local/bin/brew
 
-  # Unset git protocol.version to resolve issue with xcode10.1 (10.13) build.
-  - |
-    if [[ "$osx_image" == "xcode10.1" ]]; then
-      echo "Unsetting git config protocol.version"
-      git config --global --unset protocol.version
-      git config --list --show-origin
-    fi
-
-install:
   # Get macOS version string.
   - macos_version=$(sw_vers -productVersion)
 
@@ -59,6 +50,15 @@ install:
       curl https://bootstrap.pypa.io/get-pip.py | sudo python
     fi
 
+  # Unset git protocol.version to resolve issue with xcode10.1 (10.13) build.
+  - |
+    if [[ "$macos_version" == 10.13.* ]]; then
+      echo "Unsetting git config protocol.version"
+      git config --global --unset protocol.version
+      git config --list --show-origin
+    fi
+
+install:
   # Install Ansible.
   - sudo -H pip install ansible
 
