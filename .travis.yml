@@ -22,7 +22,7 @@ before_install:
   # OpenSSL and Python if done later.
   - brew upgrade openssl || brew install openssl || true
   - brew upgrade python3 || brew install python3 || true
-  - sudo -H pip install -U virtualenv
+  - sudo -H pip3 install -U virtualenv
   - virtualenv --python=/usr/local/bin/python3 .venv
   - source .venv/bin/activate
   - pip install ansible
