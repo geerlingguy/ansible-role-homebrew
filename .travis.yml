@@ -21,9 +21,9 @@ before_install:
   # virtualenv because older macOS versions will fail with the system version of
   # OpenSSL and Python if done later.
   - brew upgrade openssl || brew install openssl || true
-  - brew upgrade python2 || brew install python2 || true
+  - brew upgrade python3 || brew install python3 || true
   - sudo -H pip install -U virtualenv
-  - virtualenv --python=/usr/local/bin/python2.7 .venv
+  - virtualenv --python=/usr/local/bin/python3 .venv
   - source .venv/bin/activate
   - pip install ansible
   - python -c "import ssl; print(ssl.OPENSSL_VERSION)"
