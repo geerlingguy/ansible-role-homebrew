@@ -91,6 +91,7 @@
   - name: Ensure blacklisted cask applications are not installed.
     homebrew_cask: "name={{ item }} state=absent"
     loop: "{{ homebrew_cask_uninstalled_apps }}"
+    when: ansible_os_family == 'Darwin'
 
   - name: Install configured cask applications.
     homebrew_cask:
@@ -101,6 +102,7 @@
     loop: "{{ homebrew_cask_apps }}"
     notify:
       - Clear homebrew cache
+    when: ansible_os_family == 'Darwin'
 
   # Brew.
   - name: Ensure blacklisted homebrew packages are not installed.
