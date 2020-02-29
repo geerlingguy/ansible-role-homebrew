@@ -1,0 +1,30 @@
+---
+- name: Ensure that gcc is available.
+  apt:
+    name: gcc
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Check if homebrew grandparent directory is already in place.
+  stat:
+    path: "{{ homebrew_prefix | dirname }}"
+  register: homebrew_prefix_parent
+  check_mode: no
+
+- name: Ensure Homebrew grandparent directory is in place.
+  file:
+    path: "{{ homebrew_prefix | dirname }}"
+    owner: root
+    group: root
+    state: directory
+  become: yes
+  when: not homebrew_prefix_parent.stat.exists
+
+- name: Ensure Homebrew parent directory is in place.
+  file:
+    path: "{{ homebrew_prefix }}"
+    owner: "{{ homebrew_user }}"
+    group: "{{ homebrew_group }}"
+    state: directory
+  become: yes
