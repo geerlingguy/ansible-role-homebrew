@@ -4,24 +4,8 @@
     homebrew_user: '{{ homebrew_user | default(ansible_user_id) }}'
     homebrew_group: '{{ homebrew_group | default(ansible_user_gid) }}'
 
-# Homebrew setup prerequisites.
-- name: Ensure Homebrew parent directory has correct permissions (MacOS >= 10.13).
-  file:
-    path: "{{ homebrew_prefix }}"
-    owner: root
-    state: directory
-  become: yes
-  when: "ansible_distribution_version is version('10.13', '>=')"
-
-- name: Ensure Homebrew parent directory has correct permissions (MacOS < 10.13).
-  file:
-    path: "{{ homebrew_prefix }}"
-    owner: root
-    group: admin
-    state: directory
-    mode: 0775
-  become: yes
-  when: "ansible_distribution_version is version('10.13', '<')"
+- include_tasks: setup-Darwin.yml
+  when: ansible_os_family == 'Darwin'
 
 - name: Ensure Homebrew directory exists.
   file:
