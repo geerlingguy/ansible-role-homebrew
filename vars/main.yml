@@ -1,9 +1,9 @@
 ---
 homebrew_folders_base:
-  - Cellar
-  - Homebrew
-  - Frameworks
   - Caskroom
+  - Cellar
+  - Frameworks
+  - Homebrew
   - bin
   - etc
   - include
