@@ -1,7 +1,4 @@
 ---
-dependencies:
-  - elliotweiser.osx-command-line-tools
-
 galaxy_info:
   author: geerlingguy
   description: Homebrew for macOS
