@@ -19,12 +19,12 @@ Available variables are listed below, along with default values (see [`defaults/
 
 The GitHub repository for Homebrew core.
 
-    homebrew_prefix: /usr/local
+    homebrew_prefix: "{{ (ansible_os_family == 'Darwin') | ternary('/usr/local', '/home/linuxbrew/.linuxbrew') }}"
     homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
 
 The path where Homebrew will be installed (`homebrew_prefix` is the parent directory). It is recommended you stick to the default, otherwise Homebrew might have some weird issues. If you change this variable, you should also manually create a symlink back to /usr/local so things work as Homebrew expects.
 
-    homebrew_brew_bin_path: /usr/local/bin
+    homebrew_brew_bin_path: "{{ homebrew_prefix }}/bin"
 
 The path where `brew` will be installed.
 
