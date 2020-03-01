@@ -9,7 +9,7 @@ Installs [Homebrew][homebrew] on MacOS, and configures packages, taps, and cask 
 
 ## Requirements
 
-None.
+On MacOS, make sure the command-line tools are installed. One way to do this is by adding the role [elliotweiser.osx-command-line-tools][dep-osx-clt-role].
 
 ## Role Variables
 
@@ -94,10 +94,6 @@ The group that you would like to use while installing Homebrew.
 
 Any additional folders inside `homebrew_prefix` for which to ensure homebrew user/group ownership.
 
-## Dependencies
-
-  - [elliotweiser.osx-command-line-tools][dep-osx-clt-role]
-
 ## Example Playbook
 
     - hosts: localhost
@@ -105,6 +101,7 @@ Any additional folders inside `homebrew_prefix` for which to ensure homebrew use
         homebrew_installed_packages:
           - mysql
       roles:
+        - elliotweiser.osx-command-line-tools
         - geerlingguy.homebrew
 
 See the `tests/local-testing` directory for an example of running this role over
