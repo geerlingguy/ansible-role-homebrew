@@ -1,11 +1,14 @@
 ---
 galaxy_info:
   author: geerlingguy
-  description: Homebrew for macOS
+  description: Homebrew for macOS and Debian
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
   min_ansible_version: 2.5
   platforms:
+    - name: Debian
+      versions:
+        - all
     - name: MacOSX
       versions:
         - all
