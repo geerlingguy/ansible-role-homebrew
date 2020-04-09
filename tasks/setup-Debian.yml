@@ -3,7 +3,6 @@
   apt:
     name: gcc
     state: present
-    update_cache: yes
   become: yes
 
 - name: Check if homebrew grandparent directory is already in place.
