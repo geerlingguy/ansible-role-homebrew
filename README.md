@@ -11,6 +11,8 @@ Installs [Homebrew][homebrew] on MacOS, and configures packages, taps, and cask 
 
 On MacOS, make sure the command-line tools are installed. One way to do this is by adding the role [elliotweiser.osx-command-line-tools][dep-osx-clt-role].
 
+On Linux, make sure that `gcc` is installed. The example `tasks/playbook.yml` shows one way to do this that will work on Debian-like systems (including Ubuntu).
+
 ## Role Variables
 
 Available variables are listed below, along with default values (see [`defaults/main.yml`](defaults/main.yml)):
