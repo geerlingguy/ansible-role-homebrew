@@ -1,10 +1,4 @@
 ---
-- name: Ensure that gcc is available.
-  apt:
-    name: gcc
-    state: present
-  become: yes
-
 - name: Check if homebrew grandparent directory is already in place.
   stat:
     path: "{{ homebrew_prefix | dirname }}"

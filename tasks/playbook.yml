@@ -2,5 +2,14 @@
 - hosts: localhost
   connection: local
 
+  pre_tasks:
+    - name: Ensure that gcc is available.
+      apt:
+        name: gcc
+        state: present
+        update_cache: yes
+      become: yes
+      when: ansible_os_family == 'Debian'
+
   roles:
     - geerlingguy.homebrew
