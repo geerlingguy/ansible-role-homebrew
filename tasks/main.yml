@@ -7,8 +7,8 @@
 - include_tasks: setup-Darwin.yml
   when: ansible_os_family == 'Darwin'
 
-- include_tasks: setup-Debian.yml
-  when: ansible_os_family == 'Debian'
+- include_tasks: setup-Linux.yml
+  when: ansible_os_family != 'Darwin'
 
 - name: Ensure Homebrew directory exists.
   file:
