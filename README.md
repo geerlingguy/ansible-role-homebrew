@@ -11,7 +11,7 @@ Installs [Homebrew][homebrew] on MacOS, and configures packages, taps, and cask 
 
 On MacOS, make sure the command-line tools are installed. One way to do this is by adding the role [elliotweiser.osx-command-line-tools][dep-osx-clt-role].
 
-On Linux, make sure that `gcc` is installed. The example `tasks/playbook.yml` shows one way to do this that will work on Debian-like systems (including Ubuntu).
+On Linux, make sure that `gcc` is installed. The example `tasks/playbook.yml` shows one way to do this that will work on Debian-like systems (including Ubuntu). For further requirements, see the [Homebrew Documentation][homebrew-linux].
 
 ## Role Variables
 
@@ -132,6 +132,7 @@ This role was created in 2014 by [Jeff Geerling][author-website], author of
 [badge-travis]: https://travis-ci.org/geerlingguy/ansible-role-homebrew.svg?branch=master
 [caskroom]: https://caskroom.github.io/search
 [homebrew]: http://brew.sh/
+[homebrew-linux]: https://docs.brew.sh/Homebrew-on-Linux#linuxwsl-requirements
 [dep-osx-clt-role]: https://galaxy.ansible.com/elliotweiser/osx-command-line-tools/
 [link-galaxy]: https://galaxy.ansible.com/geerlingguy/homebrew/
 [link-license]: https://raw.githubusercontent.com/geerlingguy/ansible-role-homebrew/master/LICENSE
