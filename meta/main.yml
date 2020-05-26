@@ -3,6 +3,7 @@ dependencies:
   - elliotweiser.osx-command-line-tools
 
 galaxy_info:
+  role_name: homebrew
   author: geerlingguy
   description: Homebrew for macOS
   company: "Midwestern Mac, LLC"
