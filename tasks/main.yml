@@ -117,6 +117,9 @@
     loop: "{{ homebrew_cask_apps }}"
     notify:
       - Clear homebrew cache
+    register: install_package
+    until: install_package is not failed
+    retries: 3
 
   # Brew.
   - name: Ensure blacklisted homebrew packages are not installed.
