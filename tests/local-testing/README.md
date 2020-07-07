@@ -2,7 +2,7 @@
 
 To test this Ansible Role's functionality locally, run the playbook included in this subdirectory using the following command:
 
-    ansible-playbook playbook.yml --connection=local --ask-sudo-pass
+    ansible-playbook playbook.yml --connection=local --ask-become-pass
 
 Note: This presumes you've already installed Ansible using some other method besides `brew install ansible` :)
 
