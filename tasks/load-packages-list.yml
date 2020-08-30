@@ -1,0 +1,14 @@
+---
+- name: Create the list of desired packages.
+  set_fact:
+    homebrew_installed_packages: "{{ homebrew_installed_packages |default([]) }} + [ '{{ item }}' ]"
+  with_lines: cat {{ homebrew_installed_packages_list_file }}
+  ignore_errors: yes
+  delegate_to: localhost
+
+- name: Remove duplicates of desired packages.
+  set_fact:
+    homebrew_installed_packages: "{{ homebrew_installed_packages | unique | list }}"
+  ignore_errors: yes
+  delegate_to: localhost
+...

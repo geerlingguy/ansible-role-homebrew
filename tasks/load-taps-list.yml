@@ -1,0 +1,14 @@
+---
+- name: Create the list of desired taps.
+  set_fact:
+    homebrew_taps: "{{ homebrew_taps |default([]) }} + [ '{{ item }}' ]"
+  with_lines: cat {{ homebrew_taps_list_file }}
+  ignore_errors: yes
+  delegate_to: localhost
+
+- name: Remove duplicates of desired taps.
+  set_fact:
+    homebrew_taps: "{{ homebrew_taps | unique | list }}"
+  ignore_errors: yes
+  delegate_to: localhost
+...

@@ -1,0 +1,14 @@
+---
+- name: Create the list of desired Cask apps.
+  set_fact:
+    homebrew_cask_apps: "{{ homebrew_cask_apps |default([]) }} + [ '{{ item }}' ]"
+  with_lines: cat {{ homebrew_cask_apps_list_file }}
+  ignore_errors: yes
+  delegate_to: localhost
+
+- name: Remove duplicates of desired Cask apps.
+  set_fact:
+    homebrew_cask_apps: "{{ homebrew_cask_apps | unique | list }}"
+  ignore_errors: yes
+  delegate_to: localhost
+...

@@ -28,6 +28,20 @@ The path where Homebrew will be installed (`homebrew_prefix` is the parent direc
 
 The path where `brew` will be installed.
 
+    homebrew_installed_packages_list_file: "files/installed-packages-list.txt"
+
+The file contains a simple list of packages names. It is not mandatory.
+
+    # Get the list of your currently installed packages
+    brew list | grep '^[0-9]' -v > installed-packages-list.txt
+
+    cat installed-packages-list.txt
+    ansible-lint
+    curl
+    ...
+
+The list of packages contained in the list file will be merged without duplicates to the list contained in `homebrew_installed_packages`
+
     homebrew_installed_packages:
       - ssh-copy-id
       - pv
@@ -43,11 +57,41 @@ Packages you would like to make sure are _uninstalled_.
 
 Whether to upgrade homebrew and all packages installed by homebrew. If you prefer to manually update packages via `brew` commands, leave this set to `no`.
 
+    homebrew_taps_list_file: "files/taps-list.txt"
+
+The file contains a simple list of taps names. It is not mandatory.
+
+    #Get the list of your currently tapped taps
+    brew tap-info --installed | grep -v -e '^$' | grep -v 'From\|files' | cut -d: -f1 > taps-list.txt
+
+    cat taps-list.txt
+    chef/chef
+    homebrew/cask
+    homebrew/core
+    ...
+
+The list of taps contained in the list file will be merged without duplicates to the list contained in `homebrew_taps`
+
     homebrew_taps:
       - homebrew/core
       - { name: my_company/internal_tap, url: 'https://example.com/path/to/tap.git' }
 
 Taps you would like to make sure Homebrew has tapped.
+
+    homebrew_cask_apps_list_file: "files/installed-casks-list.txt"
+
+The file contains a simple list of casks names. It is not mandatory.
+
+    # Get the list of your currently installed casks
+    brew cask list | grep '^[0-9]' -v > installed-casks-list.txt
+ installed-casks-list.txt
+
+    cat installed-casks-list.txt
+    bitwarden
+    caffeine
+    ...
+
+The list of casks contained in the list file will be merged without duplicates to the list contained in `homebrew_cask_apps`
 
     homebrew_cask_apps:
       - firefox

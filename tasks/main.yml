@@ -96,6 +96,9 @@
     check_mode: no
 
   # Tap.
+  - include_tasks: load-taps-list.yml
+    when: homebrew_taps_list_file is defined and homebrew_taps_list_file != ''
+
   - name: Ensure configured taps are tapped.
     homebrew_tap:
       tap: '{{ item.name | default(item) }}'
@@ -104,6 +107,9 @@
     loop: "{{ homebrew_taps }}"
 
   # Cask.
+  - include_tasks: load-casks-list.yml
+    when: homebrew_cask_apps_list_file is defined homebrew_taps_list_file != ''
+
   - name: Ensure blacklisted cask applications are not installed.
     homebrew_cask: "name={{ item }} state=absent"
     loop: "{{ homebrew_cask_uninstalled_apps }}"
@@ -119,6 +125,9 @@
       - Clear homebrew cache
 
   # Brew.
+  - include_tasks: load-packages-list.yml
+    when: homebrew_installed_packages_list_file is defined and homebrew_installed_packages_list_file != ''
+
   - name: Ensure blacklisted homebrew packages are not installed.
     homebrew: "name={{ item }} state=absent"
     loop: "{{ homebrew_uninstalled_packages }}"

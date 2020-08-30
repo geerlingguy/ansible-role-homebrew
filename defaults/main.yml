@@ -5,14 +5,20 @@ homebrew_prefix: /usr/local
 homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
 homebrew_brew_bin_path: "{{ homebrew_prefix }}/bin"
 
+homebrew_installed_packages_list_file: ''
+
 homebrew_installed_packages: []
 
 homebrew_uninstalled_packages: []
 
 homebrew_upgrade_all_packages: no
 
+homebrew_taps_list_file: ''
+
 homebrew_taps:
   - homebrew/core
+
+homebrew_cask_apps_list_file: ''
 
 homebrew_cask_apps: []
 
