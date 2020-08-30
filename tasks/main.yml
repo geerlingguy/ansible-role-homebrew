@@ -108,7 +108,7 @@
 
   # Cask.
   - include_tasks: load-casks-list.yml
-    when: homebrew_cask_apps_list_file is defined homebrew_taps_list_file != ''
+    when: homebrew_cask_apps_list_file is defined and homebrew_cask_apps_list_file != ''
 
   - name: Ensure blacklisted cask applications are not installed.
     homebrew_cask: "name={{ item }} state=absent"
