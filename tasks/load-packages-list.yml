@@ -1,14 +1,20 @@
 ---
-- name: Add packages from '{{ homebrew_installed_packages_list_file }}' to the list of desired packages.
-  set_fact:
-    homebrew_installed_packages: "{{ homebrew_installed_packages |default([]) }} + [ '{{ item }}' ]"
-  with_lines: cat {{ homebrew_installed_packages_list_file }}
-  ignore_errors: yes
-  delegate_to: localhost
+- name: Check if '{{ homebrew_installed_packages_list_file }}' exists.
+  stat:
+    path: "{{ homebrew_installed_packages_list_file }}"
+  register: installed_packages_list_file
+  check_mode: no
 
-- name: Remove duplicates of desired packages.
-  set_fact:
-    homebrew_installed_packages: "{{ homebrew_installed_packages | unique | list }}"
+- block:
+  - name: Add packages from '{{ homebrew_installed_packages_list_file }}' to the list of desired packages.
+    set_fact:
+      homebrew_installed_packages: "{{ homebrew_installed_packages |default([]) }} + [ '{{ item }}' ]"
+    with_lines: cat {{ homebrew_installed_packages_list_file }}
+
+  - name: Remove duplicates of desired packages.
+    set_fact:
+      homebrew_installed_packages: "{{ homebrew_installed_packages | unique | list }}"
+  when: installed_packages_list_file.stat.exists
   ignore_errors: yes
   delegate_to: localhost
 ...

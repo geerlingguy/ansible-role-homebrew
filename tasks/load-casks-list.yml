@@ -1,14 +1,20 @@
 ---
-- name: Add casks from '{{ homebrew_cask_apps_list_file }}' to the list of desired Cask apps.
-  set_fact:
-    homebrew_cask_apps: "{{ homebrew_cask_apps |default([]) }} + [ '{{ item }}' ]"
-  with_lines: cat {{ homebrew_cask_apps_list_file }}
-  ignore_errors: yes
-  delegate_to: localhost
+- name: Check if '{{ homebrew_cask_apps_list_file }}' exists.
+  stat:
+    path: "{{ homebrew_cask_apps_list_file }}"
+  register: cask_apps_list_file
+  check_mode: no
 
-- name: Remove duplicates of desired Cask apps.
-  set_fact:
-    homebrew_cask_apps: "{{ homebrew_cask_apps | unique | list }}"
+- block:
+  - name: Add casks from '{{ homebrew_cask_apps_list_file }}' to the list of desired Cask apps.
+    set_fact:
+      homebrew_cask_apps: "{{ homebrew_cask_apps |default([]) }} + [ '{{ item }}' ]"
+    with_lines: cat {{ homebrew_cask_apps_list_file }}
+
+  - name: Remove duplicates of desired Cask apps.
+    set_fact:
+      homebrew_cask_apps: "{{ homebrew_cask_apps | unique | list }}"
+  when: cask_apps_list_file.stat.exists
   ignore_errors: yes
   delegate_to: localhost
 ...

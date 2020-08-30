@@ -1,14 +1,20 @@
 ---
-- name: Add taps from '{{ homebrew_taps_list_file }}' to the list of desired taps.
-  set_fact:
-    homebrew_taps: "{{ homebrew_taps |default([]) }} + [ '{{ item }}' ]"
-  with_lines: cat {{ homebrew_taps_list_file }}
-  ignore_errors: yes
-  delegate_to: localhost
+- name: Check if '{{ homebrew_taps_list_file }}' exists.
+  stat:
+    path: "{{ homebrew_taps_list_file }}"
+  register: taps_list_file
+  check_mode: no
 
-- name: Remove duplicates of desired taps.
-  set_fact:
-    homebrew_taps: "{{ homebrew_taps | unique | list }}"
+- block:
+  - name: Add taps from '{{ homebrew_taps_list_file }}' to the list of desired taps.
+    set_fact:
+      homebrew_taps: "{{ homebrew_taps |default([]) }} + [ '{{ item }}' ]"
+    with_lines: cat {{ homebrew_taps_list_file }}
+
+  - name: Remove duplicates of desired taps.
+    set_fact:
+      homebrew_taps: "{{ homebrew_taps | unique | list }}"
+  when: taps_list_file.stat.exists
   ignore_errors: yes
   delegate_to: localhost
 ...
