@@ -1,5 +1,5 @@
 ---
-- name: Create the list of desired taps.
+- name: Add taps from '{{ homebrew_taps_list_file }}' to the list of desired taps.
   set_fact:
     homebrew_taps: "{{ homebrew_taps |default([]) }} + [ '{{ item }}' ]"
   with_lines: cat {{ homebrew_taps_list_file }}

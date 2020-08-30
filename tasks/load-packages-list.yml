@@ -1,5 +1,5 @@
 ---
-- name: Create the list of desired packages.
+- name: Add packages from '{{ homebrew_installed_packages_list_file }}' to the list of desired packages.
   set_fact:
     homebrew_installed_packages: "{{ homebrew_installed_packages |default([]) }} + [ '{{ item }}' ]"
   with_lines: cat {{ homebrew_installed_packages_list_file }}
