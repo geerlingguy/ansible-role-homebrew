@@ -22,7 +22,7 @@ before_install:
   - sudo -H pip3 install -U virtualenv
   - virtualenv --python=/usr/local/bin/python3 .venv
   - source .venv/bin/activate
-  - pip install ansible
+  - pip3 install ansible
   - python -c "import ssl; print(ssl.OPENSSL_VERSION)"
   - ansible-galaxy install -r requirements.yml -p ./roles
   - deactivate
@@ -38,14 +38,8 @@ before_install:
   # Get macOS version string.
   - macos_version=$(sw_vers -productVersion)
 
-  # Install pip (macOS version dependent).
-  - |
-    if [[ "$macos_version" == 10.13.* ]]; then
-      sudo easy_install pip
-    else
-      # See: https://stackoverflow.com/a/49748494/100134
-      curl https://bootstrap.pypa.io/get-pip.py | sudo python
-    fi
+  # Install pip3.
+  - curl https://bootstrap.pypa.io/get-pip.py | sudo python3
 
   # Unset git protocol.version to resolve issue with xcode10.1 (10.13) build.
   - |
@@ -57,7 +51,7 @@ before_install:
 
 install:
   # Install Ansible.
-  - sudo -H pip install ansible
+  - sudo -H pip3 install ansible
 
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../:../roles:./roles'; } >> ansible.cfg"
