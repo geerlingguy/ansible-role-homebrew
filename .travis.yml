@@ -71,6 +71,7 @@ install:
   - sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
   - sudo /usr/libexec/locate.updatedb
   - locate ansible-playbook
+  - export PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:$PATH
 
 script:
   # Check the role/playbook's syntax.
