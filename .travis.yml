@@ -6,12 +6,12 @@ language: objective-c
 # https://docs.travis-ci.com/user/reference/osx/#macos-version
 matrix:
   include:
+    # Catalina (10.15)
+    - os: osx
+      osx_image: xcode11.4
     # Mojave (10.14)
     - os: osx
       osx_image: xcode11.3
-    # High Sierra (10.13)
-    - os: osx
-      osx_image: xcode10.1
 
 before_install:
   # Install role dependencies. Do this here, using newer OpenSSL version and a
