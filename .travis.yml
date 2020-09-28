@@ -65,6 +65,13 @@ install:
   - sudo touch /etc/ansible/hosts
   - "echo -e '[local]\nlocalhost ansible_connection=local' | sudo tee -a /etc/ansible/hosts > /dev/null"
 
+  # TODO DEBUGGING
+  - echo $PATH
+  - pip3 show ansible
+  - sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
+  - sudo /usr/libexec/locate.updatedb
+  - locate ansible-playbook
+
 script:
   # Check the role/playbook's syntax.
   - "ansible-playbook tests/test.yml --syntax-check"
