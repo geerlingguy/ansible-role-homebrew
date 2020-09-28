@@ -41,6 +41,7 @@ before_install:
   # Install Python 3.
   - curl "https://www.python.org/ftp/python/3.7.9/python-3.7.9-macosx10.9.pkg" -o "python3.pkg"
   - sudo installer -pkg python3.pkg -target /
+  - export PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:$PATH
 
   # Install pip3.
   - curl https://bootstrap.pypa.io/get-pip.py | sudo python3
@@ -64,14 +65,6 @@ install:
   - sudo mkdir -p /etc/ansible
   - sudo touch /etc/ansible/hosts
   - "echo -e '[local]\nlocalhost ansible_connection=local' | sudo tee -a /etc/ansible/hosts > /dev/null"
-
-  # TODO DEBUGGING
-  - echo $PATH
-  - pip3 show ansible
-  - sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
-  - sudo /usr/libexec/locate.updatedb
-  - locate ansible-playbook
-  - export PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:$PATH
 
 script:
   # Check the role/playbook's syntax.
