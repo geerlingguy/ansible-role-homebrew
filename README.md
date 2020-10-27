@@ -130,11 +130,11 @@ This role was created in 2014 by [Jeff Geerling][author-website], author of
 [badge-downloads]: https://img.shields.io/ansible/role/d/1858.svg
 [badge-license]: https://img.shields.io/github/license/geerlingguy/ansible-role-homebrew.svg
 [badge-role]: https://img.shields.io/ansible/role/1858.svg
-[badge-travis]: https://travis-ci.org/geerlingguy/ansible-role-homebrew.svg?branch=master
+[badge-travis]: https://travis-ci.com/geerlingguy/ansible-role-homebrew.svg?branch=master
 [caskroom]: https://caskroom.github.io/search
 [homebrew]: http://brew.sh/
 [dep-osx-clt-role]: https://galaxy.ansible.com/elliotweiser/osx-command-line-tools/
 [link-galaxy]: https://galaxy.ansible.com/geerlingguy/homebrew/
 [link-license]: https://raw.githubusercontent.com/geerlingguy/ansible-role-homebrew/master/LICENSE
-[link-travis]: https://travis-ci.org/geerlingguy/ansible-role-homebrew
+[link-travis]: https://travis-ci.com/geerlingguy/ansible-role-homebrew
 [mac-dev-playbook]: https://github.com/geerlingguy/mac-dev-playbook
