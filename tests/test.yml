@@ -7,6 +7,7 @@
       - nginx-full  # from dengi/nginx
     homebrew_cask_apps:
       - google-chrome  # from hombrew/cask
+      - { name: "google-chrome" }
     homebrew_taps:
       - homebrew/core
       - { name: denji/nginx, url: 'https://github.com/denji/homebrew-nginx.git' }
