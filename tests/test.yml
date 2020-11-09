@@ -10,6 +10,7 @@
 
     homebrew_cask_apps:
       - firefox  # from hombrew/cask
+      - google-chrome  # from hombrew/cask
 
     homebrew_taps:
       - homebrew/core
