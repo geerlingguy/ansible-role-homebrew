@@ -10,7 +10,7 @@ name: CI
 
 defaults:
   run:
-    working-directory: 'geerlingguy.apache'
+    working-directory: 'geerlingguy.homebrew'
 
 jobs:
 
@@ -21,7 +21,7 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v2
         with:
-          path: 'geerlingguy.apache'
+          path: 'geerlingguy.homebrew'
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2
@@ -47,12 +47,11 @@ jobs:
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v2
-        # with:
-        #   path: 'geerlingguy.homebrew'
+        with:
+          path: 'geerlingguy.homebrew'
 
       - name: Uninstall GitHub Actions' built-in Homebrew.
-        run: ls
-        # run: tests/uninstall-homebrew.sh
+        run: tests/uninstall-homebrew.sh
 
       - name: Install test dependencies.
         run: pip3 install ansible
