@@ -39,9 +39,9 @@ Packages you would like to make sure are installed via `brew install`. You can o
 
 Packages you would like to make sure are _uninstalled_.
 
-    homebrew_upgrade_all_packages: no
+    homebrew_upgrade_all_packages: false
 
-Whether to upgrade homebrew and all packages installed by homebrew. If you prefer to manually update packages via `brew` commands, leave this set to `no`.
+Whether to upgrade homebrew and all packages installed by homebrew. If you prefer to manually update packages via `brew` commands, leave this set to `false`.
 
     homebrew_taps:
       - homebrew/core
