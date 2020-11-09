@@ -54,7 +54,7 @@ jobs:
         run: tests/uninstall-homebrew.sh
 
       - name: Install test dependencies.
-        run: pip3 install ansible
+        run: sudo pip3 install ansible
 
       - name: Set up the test environment.
         run: |
