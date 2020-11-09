@@ -45,16 +45,8 @@ jobs:
           - macos-10.15
 
     steps:
-      - name: Uninstall Homebrew.
-        run: |
-          ls
-          curl -sLO https://raw.githubusercontent.com/Homebrew/install/master/uninstall.sh
-          ls
-          chmod +x uninstall.sh
-          bash -c "./uninstall.sh --force"
-          sudo rm -rf /usr/local/Homebrew
-          sudo rm -rf /usr/local/Caskroom
-          sudo rm -rf /usr/local/bin/brew
+      - name: Uninstall GitHub Actions' built-in Homebrew.
+        run: tests/uninstall-homebrew.sh
 
       - name: Check out the codebase.
         uses: actions/checkout@v2
