@@ -1,2 +1,6 @@
 ---
-- src: elliotweiser.osx-command-line-tools
+roles:
+  - src: elliotweiser.osx-command-line-tools
+
+collections:
+  - community.general
