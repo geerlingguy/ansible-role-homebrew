@@ -1,4 +1,6 @@
-# Ansible Role: Homebrew
+# Ansible Role: Homebrew (MOVED)
+
+**MOVED**: This role has been moved into the `geerlingguy.mac` collection. Please see [this issue](https://github.com/geerlingguy/ansible-role-homebrew/issues/166) for a migration guide and more information.
 
 [![MIT licensed][badge-license]][link-license]
 [![Galaxy Role][badge-role]][link-galaxy]
